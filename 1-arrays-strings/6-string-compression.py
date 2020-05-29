@@ -1,8 +1,8 @@
 # String Compression
-# Implement a method to perform basic string compression 
-# using the counts of repeated characters. For example, the string aabcccccaaa 
-# would become a2b1c5a3. If the "compressed" string would not become smaller 
-# than the original string, your method should return the original string. 
+# Implement a method to perform basic string compression
+# using the counts of repeated characters. For example, the string aabcccccaaa
+# would become a2b1c5a3. If the "compressed" string would not become smaller
+# than the original string, your method should return the original string.
 # You can assume the string has only uppercase and lowercase letters (a - z).
 
 def main():
@@ -14,20 +14,19 @@ def main():
 
 
 def compress(s: str) -> str:
-    current = ""
-    count = 0
-    result = ""
-    for c in s:
-        if c != current:
-            if count > 0:
-                result += f"{current}{count}"
-            current = c
-            count = 1
-        else:
-            count += 1
+    if len(s) == 0:
+        return ""
 
-    if count > 0:
-        result += f"{current}{count}"
+    compressed = []
+    count = 0
+    for i in range(len(s)):
+        if i != 0 and s[i] != s[i - 1]:
+            compressed.append(f"{s[i - 1]}{count}")
+            count = 0
+        count += 1
+    compressed.append(f"{s[-1]}{count}")
+
+    result = ''.join(compressed)
     return result if len(result) < len(s) else s
 
 
