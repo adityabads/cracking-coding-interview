@@ -2,14 +2,11 @@
 # Given two strings, write a method to decide if one is a permutation of the other.
 
 from collections import defaultdict
-
-def main():
-    checkeq(is_permutation("abcde", "bdeca"), True)
-    checkeq(is_permutation("Abcde", "bdeca"), False)
-    checkeq(is_permutation("abcde", "bdecb"), False)
+import unittest
 
 
-def is_permutation(s1: str, s2: str) -> bool:
+def is_perm(s1: str, s2: str) -> bool:
+    """Returns true iff `s1` and `s2` are permutations of another"""
     if len(s1) != len(s2):
         return False
     d = defaultdict(int)
@@ -23,9 +20,19 @@ def is_permutation(s1: str, s2: str) -> bool:
     return True
 
 
-def checkeq(x, y):
-    print("passed") if x == y else print("FAILED")
+class TestCheckPermutation(unittest.TestCase):
+    def test_is_perm(self):
+        self.assertTrue(is_perm("", ""))
+        self.assertTrue(is_perm("abcdee", "abcdee"))
+        self.assertTrue(is_perm("abcdee", "bdecae"))
+        self.assertTrue(is_perm("abcdee", "eecbad"))
+
+        self.assertFalse(is_perm("", "a"))
+        self.assertFalse(is_perm("a", ""))
+        self.assertFalse(is_perm("abcdee", "eEcbad"))
+        self.assertFalse(is_perm("abcdee", "bdeecb"))
+        self.assertFalse(is_perm("abc", "abcb"))
 
 
 if __name__ == "__main__":
-    main()
+    unittest.main()

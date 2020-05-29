@@ -1,36 +1,20 @@
 # Rotate Matrix
-# Given an image represented by an NxN matrix, where each pixel in the image 
+# Given an image represented by an NxN matrix, where each pixel in the image
 # is 4 bytes, write a method to rotate the image by 90 degrees counterclockwise.
 # Can you do this in place?
 
 from typing import List
-
-
-def main():
-    m = [[1]]
-    rotate_matrix(m)
-    print_matrix(m)
-    m2 = [
-        [1, 2], 
-        [3, 4]
-    ]
-    rotate_matrix(m2)
-    print_matrix(m2)
-    m3 = [
-        [1, 2, 3], 
-        [4, 5, 6], 
-        [7, 8, 9]
-    ]
-    rotate_matrix(m3)
-    print_matrix(m3)
+import unittest
 
 
 def rotate_matrix(mat: List[List[int]]):
+    """Rotates matrix `mat` counterclockwise 90 degrees"""
     n = len(mat)
-    # rotate each square "layer", starting from outer layer and moving inward
+    # iterate over each square "layer", starting from outer layer and moving inward
     for i in range(n // 2):
-        for j in range(n - 2 * i):
-            # four-way swap matrix entries in layer in-place
+        # iterate over matrix entries on each edge
+        for j in range(n - 2 * i - 1):
+            # 4-way swap matrix entries between edges
             coords = [(i, j)]
             for k in range(1, 4):
                 coords.append(rotate_coord(coords[k - 1][0], coords[k - 1][1], n))
@@ -41,7 +25,7 @@ def rotate_matrix(mat: List[List[int]]):
 
 
 def rotate_coord(x: int, y: int, n: int) -> (int, int):
-    # find counterclockwise rotated coordinates in n-by-n matrix
+    """Returns (x, y) indices rotated counterclockwise 90 degrees in n-by-n matrix"""
     center = (n - 1) / 2
     x -= center
     y -= center
@@ -51,15 +35,36 @@ def rotate_coord(x: int, y: int, n: int) -> (int, int):
     return int(x), int(y)
 
 
-def print_matrix(m: List[List[int]]):
-    for i in range(len(m)):
-        print(m[i])
-    print()
+class TestRotateMatrix(unittest.TestCase):
+    def test_rotate_matrix(self):
+        m1 = [[0]]
+        rotate_matrix(m1)
+        self.assertEqual(m1, [[0]])
+        m2 = [[1, 2], [3, 4]]
+        rotate_matrix(m2)
+        self.assertEqual(m2, [[2, 4], [1, 3]])
+        m3 = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        rotate_matrix(m3)
+        self.assertEqual(m3, [[3, 6, 9], [2, 5, 8], [1, 4, 7]])
 
+    def test_rotate_coord(self):
+        self.assertEqual(rotate_coord(0, 0, 1), (0, 0))
 
-def checkeq(x, y):
-    print("passed") if x == y else print("FAILED")
+        self.assertEqual(rotate_coord(0, 0, 2), (1, 0))
+        self.assertEqual(rotate_coord(0, 1, 2), (0, 0))
+        self.assertEqual(rotate_coord(1, 0, 2), (1, 1))
+        self.assertEqual(rotate_coord(1, 1, 2), (0, 1))
+
+        self.assertEqual(rotate_coord(0, 0, 3), (2, 0))
+        self.assertEqual(rotate_coord(0, 1, 3), (1, 0))
+        self.assertEqual(rotate_coord(0, 2, 3), (0, 0))
+        self.assertEqual(rotate_coord(1, 0, 3), (2, 1))
+        self.assertEqual(rotate_coord(1, 1, 3), (1, 1))
+        self.assertEqual(rotate_coord(1, 2, 3), (0, 1))
+        self.assertEqual(rotate_coord(2, 0, 3), (2, 2))
+        self.assertEqual(rotate_coord(2, 1, 3), (1, 2))
+        self.assertEqual(rotate_coord(2, 2, 3), (0, 2))
 
 
 if __name__ == "__main__":
-    main()
+    unittest.main()

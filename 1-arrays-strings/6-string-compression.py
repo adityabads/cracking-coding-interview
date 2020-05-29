@@ -5,18 +5,15 @@
 # than the original string, your method should return the original string.
 # You can assume the string has only uppercase and lowercase letters (a - z).
 
-def main():
-    checkeq(compress("aabcccccaaa"), "a2b1c5a3")
-    checkeq(compress(""), "")
-    checkeq(compress("aaa"), "a3")
-    checkeq(compress("aa"), "aa")
-    checkeq(compress("abc"), "abc")
+import unittest
 
 
 def compress(s: str) -> str:
+    """Compresses repeated characters if would make a shorter string"""
     if len(s) == 0:
         return ""
 
+    # Count repeated characters, store in array
     compressed = []
     count = 0
     for i in range(len(s)):
@@ -26,13 +23,20 @@ def compress(s: str) -> str:
         count += 1
     compressed.append(f"{s[-1]}{count}")
 
+    # Return compressed string if shorter than original
     result = ''.join(compressed)
     return result if len(result) < len(s) else s
 
 
-def checkeq(x, y):
-    print("passed") if x == y else print("FAILED")
+class TestStringCompression(unittest.TestCase):
+    def test_compress(self):
+        self.assertEqual(compress(""), "")
+        self.assertEqual(compress("a"), "a")
+        self.assertEqual(compress("aa"), "aa")
+        self.assertEqual(compress("abc"), "abc")
+        self.assertEqual(compress("aaa"), "a3")
+        self.assertEqual(compress("aabcccccaaa"), "a2b1c5a3")
 
 
 if __name__ == "__main__":
-    main()
+    unittest.main()

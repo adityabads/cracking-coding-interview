@@ -1,13 +1,12 @@
 # Is Unique
-# Implement an algorithm to determine if a string has all unique characters. 
+# Implement an algorithm to determine if a string has all unique characters.
 # What if you cannot use additional data structures?
 
-def main():
-    checkeq(all_chars_unique("Aabc"), True)
-    checkeq(all_chars_unique("aabc"), False)
+import unittest
 
 
 def all_chars_unique(s: str) -> bool:
+    """Returns true iff all chars in `s` are unique (or empty)"""
     bitvec = 0
     for c in s:
         if in_bitvec(bitvec, ord(c)):
@@ -17,16 +16,24 @@ def all_chars_unique(s: str) -> bool:
 
 
 def in_bitvec(bitvec: int, ind: int) -> bool:
+    """Returns true iff bit `ind` is switched on in `bitvec`"""
     return (bitvec & (1 << ind)) != 0
 
 
 def add_to_bitvec(bitvec: int, ind: int) -> int:
+    """Returns `bitvec` with bit `ind` switched on"""
     return bitvec | (1 << ind)
 
 
-def checkeq(x, y):
-    print("passed") if x == y else print("FAILED")
+class TestIsUnique(unittest.TestCase):
+    def test_all_chars_unique(self):
+        self.assertTrue(all_chars_unique(""))
+        self.assertTrue(all_chars_unique("a"))
+        self.assertTrue(all_chars_unique("abc"))
+        self.assertTrue(all_chars_unique("Aabc;3"))
+        self.assertFalse(all_chars_unique("aabc;3"))
+        self.assertFalse(all_chars_unique("abc3;3"))
 
 
 if __name__ == "__main__":
-    main()
+    unittest.main()

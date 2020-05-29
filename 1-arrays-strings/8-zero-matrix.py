@@ -3,19 +3,11 @@
 # its entire row and column are set to 0
 
 from typing import List
-
-
-def main():
-    m = [
-        [1, 2, 0, 4],
-        [5, 0, 7, 8],
-        [9, 10, 11, 12]
-    ]
-    zeroify(m)
-    print_matrix(m)
+import unittest
 
 
 def zeroify(mat: List[List[int]]):
+    """Set rows and cols with zeros to all zeros"""
     m = len(mat)
     n = len(mat[0])
 
@@ -47,11 +39,24 @@ def zeroify(mat: List[List[int]]):
             mat[i][0] = 0
 
 
-def print_matrix(m: List[List[int]]):
-    for i in range(len(m)):
-        print(m[i])
-    print()
+class TestZeroMatrix(unittest.TestCase):
+    def test_zeroify(self):
+        m1 = [[1, 2], [3, 4]]
+        zeroify(m1)
+        self.assertEqual(m1, [[1, 2], [3, 4]])
+        m2 = [[1, 2], [3, 0]]
+        zeroify(m2)
+        self.assertEqual(m2, [[1, 0], [0, 0]])
+        m3 = [[1, 2, 0], [4, 5, 6], [7, 8, 9]]
+        zeroify(m3)
+        self.assertEqual(m3, [[0, 0, 0], [4, 5, 0], [7, 8, 0]])
+        m4 = [[1, 2, 3], [0, 5, 6], [7, 8, 9]]
+        zeroify(m4)
+        self.assertEqual(m4, [[0, 2, 3], [0, 0, 0], [0, 8, 9]])
+        m5 = [[1, 2, 0, 4], [5, 0, 7, 8], [9, 10, 11, 12]]
+        zeroify(m5)
+        self.assertEqual(m5, [[0, 0, 0, 0], [0, 0, 0, 0], [9, 0, 0, 12]])
 
 
 if __name__ == "__main__":
-    main()
+    unittest.main()
