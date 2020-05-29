@@ -1,5 +1,11 @@
-# Return Kth to Last
-# Implement an algorithm to find the kth to last element of a singly linked list.
+# Delete Middle Node
+# Implement an algorithm to delete a node in the middle (i.e., any node but
+# the first and last node, not necessarily the exact middle) of a singly
+# linked list, given only access to that node.
+#
+# EXAMPLE
+# lnput: the node c from the linked list a->b->c->d->e->f
+# Result: nothing is returned, but the new linked list looks like a->b->d->e->f
 
 import unittest
 
@@ -25,20 +31,10 @@ class LinkedList:
                 curr = n
         self.head = curr
 
-    def get_to_last(self, k):
-        """Returns kth to last value in linked list"""
-        if k <= 0:
-            return None
-        kth = self.head
-        last = self.head
-        i = 0
-        while last is not None:
-            if i < k:
-                i += 1
-            else:
-                kth = kth.next
-            last = last.next
-        return kth.val if i == k else None
+    def delete_middle_node(self, n: Node):
+        """Deletes Node `n` in middle of linked list"""
+        n.val = n.next.val
+        n.next = n.next.next
 
     def __str__(self):
         vals = []
@@ -51,15 +47,13 @@ class LinkedList:
 
 class TestRemoveDups(unittest.TestCase):
     def test_remove_dups(self):
-        lst = LinkedList()
-        self.assertIsNone(lst.get_to_last(1))
-        lst = LinkedList([1])
-        self.assertEqual(lst.get_to_last(1), 1)
-        self.assertIsNone(lst.get_to_last(2))
-        lst = LinkedList([1, 2, 3, 4, 5])
-        self.assertEqual(lst.get_to_last(1), 5)
-        self.assertEqual(lst.get_to_last(2), 4)
-        self.assertEqual(lst.get_to_last(5), 1)
+        lst = LinkedList("abcdef")
+        lst.delete_middle_node(lst.head.next.next)
+        self.assertEqual(str(lst), "a b d e f")
+        lst.delete_middle_node(lst.head.next.next.next)
+        self.assertEqual(str(lst), "a b d f")
+        lst.delete_middle_node(lst.head.next)
+        self.assertEqual(str(lst), "a d f")
 
     def test_linked_list(self):
         lst = LinkedList()
@@ -68,8 +62,8 @@ class TestRemoveDups(unittest.TestCase):
         self.assertEqual(str(lst), "")
         lst = LinkedList([1])
         self.assertEqual(str(lst), "1")
-        lst = LinkedList([1, 2, 3, 4, 5])
-        self.assertEqual(str(lst), "1 2 3 4 5")
+        lst = LinkedList("abcdef")
+        self.assertEqual(str(lst), "a b c d e f")
 
 
 if __name__ == "__main__":
