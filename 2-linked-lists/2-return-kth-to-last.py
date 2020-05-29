@@ -1,6 +1,5 @@
-# Remove Dups
-# Write code to remove duplicates from an unsorted linked list.
-# How would you solve this problem if a temporary buffer is not allowed?
+# Return Kth to Last
+# Implement an algorithm to find the kth to last element of a singly linked list.
 
 import unittest
 
@@ -26,19 +25,20 @@ class LinkedList:
                 curr = n
         self.head = curr
 
-    def remove_dups(self):
-        """Removes duplicate vals from linked list"""
-        seen = set()
-        prev = None
-        curr = self.head
-        while curr is not None:
-            val = curr.val
-            if val in seen:
-                prev.next = curr.next
+    def get_to_last(self, k: int):
+        """Returns kth to last value in linked list"""
+        if k <= 0:
+            return None
+        kth = self.head
+        last = self.head
+        i = 0
+        while last is not None:
+            if i < k:
+                i += 1
             else:
-                seen.add(val)
-                prev = curr
-            curr = curr.next
+                kth = kth.next
+            last = last.next
+        return kth.val if i == k else None
 
     def __str__(self):
         vals = []
@@ -52,20 +52,14 @@ class LinkedList:
 class TestRemoveDups(unittest.TestCase):
     def test_remove_dups(self):
         lst = LinkedList()
-        lst.remove_dups()
-        self.assertEqual(str(lst), "")
+        self.assertIsNone(lst.get_to_last(1))
+        lst = LinkedList([1])
+        self.assertEqual(lst.get_to_last(1), 1)
+        self.assertIsNone(lst.get_to_last(2))
         lst = LinkedList([1, 2, 3, 4, 5])
-        lst.remove_dups()
-        self.assertEqual(str(lst), "1 2 3 4 5")
-        lst = LinkedList([1, 2, 3, 1, 4, 5])
-        lst.remove_dups()
-        self.assertEqual(str(lst), "1 2 3 4 5")
-        lst = LinkedList([1, 2, 3, 4, 4, 4, 5])
-        lst.remove_dups()
-        self.assertEqual(str(lst), "1 2 3 4 5")
-        lst = LinkedList([1, 2, 1, 3, 4, 1, 5, 2, 5, 3])
-        lst.remove_dups()
-        self.assertEqual(str(lst), "1 2 3 4 5")
+        self.assertEqual(lst.get_to_last(1), 5)
+        self.assertEqual(lst.get_to_last(2), 4)
+        self.assertEqual(lst.get_to_last(5), 1)
 
     def test_linked_list(self):
         lst = LinkedList()
