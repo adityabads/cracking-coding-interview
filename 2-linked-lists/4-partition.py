@@ -50,13 +50,12 @@ class LinkedList:
             rightptr = rightptr.next
         # swap values between before/after partition index if appropriate
         while rightptr is not None:
-            if rightptr.val >= x:
+            while rightptr is not None and rightptr.val >= x:
                 rightptr = rightptr.next
-                continue
-            if leftptr.val >= x:
+            if leftptr is not None and leftptr.val < x:
+                leftptr = leftptr.next
+            if rightptr is not None:
                 leftptr.val, rightptr.val = rightptr.val, leftptr.val
-                rightptr = rightptr.next
-            leftptr = leftptr.next
 
     def is_partitioned(self, x: int) -> bool:
         """Returns true iff linked list partitioned on `x`"""
@@ -84,6 +83,10 @@ class LinkedList:
 
 class TestPartition(unittest.TestCase):
     def test_partition(self):
+        lst = LinkedList([1, 2, 3, 4, 5, 6, 7, 8])
+        self.assertTrue(lst.is_partitioned(6))
+        lst.partition(6)
+        self.assertTrue(lst.is_partitioned(6))
         lst = LinkedList([9, 8, 2, 4, 7, 6, 3, 5])
         self.assertFalse(lst.is_partitioned(4))
         lst.partition(4)
