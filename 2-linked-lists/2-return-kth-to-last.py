@@ -61,16 +61,6 @@ class TestRemoveDups(unittest.TestCase):
         self.assertEqual(lst.get_to_last(2), 4)
         self.assertEqual(lst.get_to_last(5), 1)
 
-    def test_linked_list(self):
-        lst = LinkedList()
-        self.assertEqual(str(lst), "")
-        lst = LinkedList([])
-        self.assertEqual(str(lst), "")
-        lst = LinkedList([1])
-        self.assertEqual(str(lst), "1")
-        lst = LinkedList([1, 2, 3, 4, 5])
-        self.assertEqual(str(lst), "1 2 3 4 5")
-
 
 if __name__ == "__main__":
     unittest.main()

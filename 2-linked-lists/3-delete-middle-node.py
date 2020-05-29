@@ -48,22 +48,13 @@ class LinkedList:
 class TestRemoveDups(unittest.TestCase):
     def test_remove_dups(self):
         lst = LinkedList("abcdef")
+        self.assertEqual(str(lst), "a b c d e f")
         lst.delete_middle_node(lst.head.next.next)
         self.assertEqual(str(lst), "a b d e f")
         lst.delete_middle_node(lst.head.next.next.next)
         self.assertEqual(str(lst), "a b d f")
         lst.delete_middle_node(lst.head.next)
         self.assertEqual(str(lst), "a d f")
-
-    def test_linked_list(self):
-        lst = LinkedList()
-        self.assertEqual(str(lst), "")
-        lst = LinkedList([])
-        self.assertEqual(str(lst), "")
-        lst = LinkedList([1])
-        self.assertEqual(str(lst), "1")
-        lst = LinkedList("abcdef")
-        self.assertEqual(str(lst), "a b c d e f")
 
 
 if __name__ == "__main__":
