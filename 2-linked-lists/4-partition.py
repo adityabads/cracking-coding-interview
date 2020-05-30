@@ -15,32 +15,20 @@ import unittest
 
 def partition(lst: LinkedList, x):
     """Partitions linked list so all values >= x are at the end"""
-    # partition index := number of values < x
-    part_ind = 0
-    curr = lst.head
+    curr = lst.tail = lst.head
     while curr is not None:
-        val = curr.val
-        if val < x:
-            part_ind += 1
-        curr = curr.next
-
-    # move rightptr to partition index
-    leftptr = lst.head
-    rightptr = lst.head
-    for i in range(part_ind):
-        rightptr = rightptr.next
-
-    # swap elements in a single pass
-    while True:
-        # find values that should be swapped on each half of partition
-        while rightptr is not None and rightptr.val >= x:
-            rightptr = rightptr.next
-        while leftptr is not None and leftptr.val < x:
-            leftptr = leftptr.next
-        if rightptr is not None:
-            leftptr.val, rightptr.val = rightptr.val, leftptr.val
+        nxt = curr.next
+        curr.next = None
+        if curr.val < x:
+            curr.next = lst.head
+            lst.head = curr
         else:
-            break
+            lst.tail.next = curr
+            lst.tail = curr
+        curr = nxt
+
+    if lst.tail is not None:
+        lst.tail.next = None
 
 
 def is_partitioned(lst: LinkedList, x) -> bool:
