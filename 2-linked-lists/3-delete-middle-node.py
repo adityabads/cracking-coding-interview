@@ -7,55 +7,27 @@
 # lnput: the node c from the linked list a->b->c->d->e->f
 # Result: nothing is returned, but the new linked list looks like a->b->d->e->f
 
+from linkedlist import Node, LinkedList
 import unittest
 
 
-class Node:
-    """Node class for LinkedList"""
-
-    def __init__(self, val):
-        self.val = val
-        self.next = None
-
-
-class LinkedList:
-    """Linked list class"""
-
-    def __init__(self, arr=None):
-        """Inits linked list with values in `arr`"""
-        curr = None
-        if arr is not None:
-            for i in reversed(range(len(arr))):
-                n = Node(arr[i])
-                n.next = curr
-                curr = n
-        self.head = curr
-
-    def delete_middle_node(self, n: Node):
-        """Deletes Node `n` in middle of linked list"""
-        n.val = n.next.val
-        n.next = n.next.next
-
-    def __str__(self):
-        vals = []
-        curr = self.head
-        while curr != None:
-            vals.append(str(curr.val))
-            curr = curr.next
-        return " ".join(vals)
+def delete_middle_node(n: Node):
+    """Deletes Node `n` in middle of linked list"""
+    n.val = n.next.val
+    n.next = n.next.next
 
 
 class TestRemoveDups(unittest.TestCase):
     def test_remove_dups(self):
         lst = LinkedList("abcdef")
         self.assertEqual(str(lst), "a b c d e f")
-        lst.delete_middle_node(lst.head.next.next)
+        delete_middle_node(lst.head.next.next)
         self.assertEqual(str(lst), "a b d e f")
-        lst.delete_middle_node(lst.head.next.next.next)
+        delete_middle_node(lst.head.next.next.next)
         self.assertEqual(str(lst), "a b d f")
-        lst.delete_middle_node(lst.head.next)
+        delete_middle_node(lst.head.next)
         self.assertEqual(str(lst), "a d f")
-        lst.delete_middle_node(lst.head.next)
+        delete_middle_node(lst.head.next)
         self.assertEqual(str(lst), "a f")
 
 

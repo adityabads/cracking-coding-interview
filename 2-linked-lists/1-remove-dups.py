@@ -2,51 +2,22 @@
 # Write code to remove duplicates from an unsorted linked list.
 # How would you solve this problem if a temporary buffer is not allowed?
 
+from linkedlist import LinkedList
 import unittest
 
 
-class Node:
-    """Node class for LinkedList"""
-
-    def __init__(self, val):
-        self.val = val
-        self.next = None
-
-
-class LinkedList:
-    """Linked list class"""
-
-    def __init__(self, arr=None):
-        """Inits linked list with values in `arr`"""
-        curr = None
-        if arr is not None:
-            for i in reversed(range(len(arr))):
-                n = Node(arr[i])
-                n.next = curr
-                curr = n
-        self.head = curr
-
-    def remove_dups(self):
-        """Removes duplicate vals from linked list"""
-        seen = set()
-        prev = None
-        curr = self.head
-        while curr is not None:
-            val = curr.val
-            if val in seen:
-                prev.next = curr.next
-            else:
-                seen.add(val)
-                prev = curr
-            curr = curr.next
-
-    def __str__(self):
-        vals = []
-        curr = self.head
-        while curr != None:
-            vals.append(str(curr.val))
-            curr = curr.next
-        return " ".join(vals)
+def remove_dups(lst: LinkedList):
+    """Removes duplicate vals from linked list"""
+    seen = set()
+    prev = None
+    curr = lst.head
+    while curr is not None:
+        if curr.val in seen:
+            prev.next = curr.next
+        else:
+            seen.add(curr.val)
+            prev = curr
+        curr = curr.next
 
 
 class TestRemoveDups(unittest.TestCase):
@@ -62,19 +33,8 @@ class TestRemoveDups(unittest.TestCase):
 
         for arr, expected in tests:
             lst = LinkedList(arr)
-            lst.remove_dups()
+            remove_dups(lst)
             self.assertEqual(str(lst), expected)
-
-    def test_linked_list(self):
-        tests = [
-            [None, ""],
-            [[], ""],
-            [[1], "1"],
-            [[1, 2, 3, 4, 5], "1 2 3 4 5"]
-        ]
-
-        for arr, expected in tests:
-            self.assertEqual(str(LinkedList(arr)), expected)
 
 
 if __name__ == "__main__":

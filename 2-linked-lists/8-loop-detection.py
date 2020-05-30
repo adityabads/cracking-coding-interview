@@ -10,63 +10,23 @@
 # Input: A -> B -> C - > D -> E -> C [the same C as earlier]
 # Output: C
 
+from linkedlist import LinkedList
 import unittest
 
 
-class Node:
-    """Node class for LinkedList"""
-
-    def __init__(self, val):
-        self.val = val
-        self.next = None
-
-
-class LinkedList:
-    """Linked list class"""
-
-    def __init__(self, arr=None):
-        """Inits linked list with values in `arr`"""
-        self.head = None
-        self.tail = None
-        self.length = 0
-        if arr is not None:
-            for val in arr:
-                self.append(Node(val))
-
-    def has_loop(self) -> bool:
-        """Returns true iff linked list has a loop"""
-        slow = self.head
-        if slow is not None:
-            fast = self.head.next
-        else:
-            return False
-        while fast is not None and fast.next is not None:
-            if slow == fast:
-                return True
-            slow = slow.next
-            fast = fast.next.next
+def has_loop(lst: LinkedList) -> bool:
+    """Returns true iff linked list has a loop"""
+    slow = lst.head
+    if slow is not None:
+        fast = lst.head.next
+    else:
         return False
-
-    def append(self, n: Node):
-        if self.length == 0:
-            self.head = n
-        elif self.length == 1:
-            self.head.next = n
-        else:
-            self.tail.next = n
-        self.tail = n
-        self.length += 1
-
-    def __len__(self):
-        return self.length
-
-    def __str__(self):
-        vals = []
-        curr = self.head
-        while curr != None:
-            vals.append(str(curr.val))
-            curr = curr.next
-        return " ".join(vals)
+    while fast is not None and fast.next is not None:
+        if slow == fast:
+            return True
+        slow = slow.next
+        fast = fast.next.next
+    return False
 
 
 class TestLoopDetection(unittest.TestCase):
@@ -74,15 +34,15 @@ class TestLoopDetection(unittest.TestCase):
         tests = ["abcdef", "abcabc", "aaaa"]
         for test in tests:
             lst = LinkedList(test)
-            self.assertFalse(lst.has_loop())
-            lst.append(lst.head)
-            self.assertTrue(lst.has_loop())
+            self.assertFalse(has_loop(lst))
+            lst.append_node(lst.head)
+            self.assertTrue(has_loop(lst))
             lst = LinkedList(test)
-            lst.append(lst.head.next)
-            self.assertTrue(lst.has_loop())
+            lst.append_node(lst.head.next)
+            self.assertTrue(has_loop(lst))
             lst = LinkedList(test)
-            lst.append(Node("a"))
-            self.assertFalse(lst.has_loop())
+            lst.append("a")
+            self.assertFalse(has_loop(lst))
 
 
 if __name__ == "__main__":

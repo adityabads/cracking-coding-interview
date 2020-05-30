@@ -13,58 +13,28 @@
 # Input:(6 -> 1 -> 7) + (2 -> 9 -> 5).That is, 617 + 295.
 # Output: 9 -> 1 -> 2. That is, 912.
 
+from linkedlist import LinkedList
 import unittest
 
 
-class Digit:
-    """Digit node class for Number"""
-
-    def __init__(self, val):
-        self.val = int(val)
-        self.next = None
-
-
-class Number:
-    """Holds non-negative integers, storing digits in a linked list in reverse order"""
-
-    def __init__(self, num):
-        """Inits linked list, storing digits in `arr` in reverse order"""
-        if isinstance(num, int):
-            num = str(num)
-        curr = None
-        if num is not None:
-            for digit in num:
-                d = Digit(digit)
-                d.next = curr
-                curr = d
-        self.head = curr
-
-    def __add__(self, other):
-        addlst = []
-        selfptr = self.head
-        otherptr = other.head
-        carry = 0
-        while selfptr is not None or otherptr is not None:
-            selfval = selfptr.val if selfptr is not None else 0
-            otherval = otherptr.val if otherptr is not None else 0
-            add = selfval + otherval + carry
-            addlst.append(add % 10)
-            carry = add // 10
-            if selfptr is not None:
-                selfptr = selfptr.next
-            if otherptr is not None:
-                otherptr = otherptr.next
-        if carry > 0:
-            addlst.append(carry)
-        return Number(addlst)
-
-    def __str__(self):
-        vals = []
-        curr = self.head
-        while curr != None:
-            vals.append(str(curr.val))
-            curr = curr.next
-        return "".join(vals)
+def add_lists(this: LinkedList, that: LinkedList):
+    addlst = []
+    thisptr = this.head
+    thatptr = that.head
+    carry = 0
+    while thisptr is not None or thatptr is not None:
+        selfval = thisptr.val if thisptr is not None else 0
+        otherval = thatptr.val if thatptr is not None else 0
+        add = selfval + otherval + carry
+        addlst.append(add % 10)
+        carry = add // 10
+        if thisptr is not None:
+            thisptr = thisptr.next
+        if thatptr is not None:
+            thatptr = thatptr.next
+    if carry > 0:
+        addlst.append(carry)
+    return LinkedList(addlst)
 
 
 class TestSumLists(unittest.TestCase):
@@ -80,7 +50,13 @@ class TestSumLists(unittest.TestCase):
         ]
 
         for x, y in tests:
-            self.assertEqual(str(Number(x) + Number(y)), str(x + y))
+            add = str(x + y)[::-1]
+            add = " ".join(add)
+            x = str(x)[::-1]
+            y = str(y)[::-1]
+            x = [int(dig) for dig in x]
+            y = [int(dig) for dig in y]
+            self.assertEqual(str(add_lists(LinkedList(x), LinkedList(y))), add)
 
 
 if __name__ == "__main__":
