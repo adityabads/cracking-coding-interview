@@ -22,7 +22,7 @@ def intersects(this: LinkedList, that: LinkedList) -> bool:
     for i in range(abs(diff)):
         thisptr = thisptr.next
     while thisptr is not None and thatptr is not None:
-        if thisptr == thatptr:
+        if thisptr is thatptr:
             return True
         thisptr = thisptr.next
         thatptr = thatptr.next

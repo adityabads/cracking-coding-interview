@@ -22,7 +22,7 @@ def has_loop(lst: LinkedList) -> bool:
     else:
         return False
     while fast is not None and fast.next is not None:
-        if slow == fast:
+        if slow is fast:
             return True
         slow = slow.next
         fast = fast.next.next

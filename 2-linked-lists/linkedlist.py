@@ -30,7 +30,7 @@ class LinkedList:
     def __str__(self):
         vals = []
         curr = self.head
-        while curr != None:
+        while curr is not None:
             vals.append(str(curr))
             curr = curr.next
         return " ".join(vals)
