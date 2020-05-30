@@ -51,7 +51,7 @@ class LinkedList:
 
 class TestPalindrome(unittest.TestCase):
     def test_is_palindrome(self):
-        trues = ["aba", "abba", "racecar", "tacocat"]
+        trues = ["", "a", "aba", "abba", "racecar", "tacocat"]
         falses = ["abBa", "rac ecar", "billy"]
 
         for test in trues:
