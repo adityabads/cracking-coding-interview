@@ -7,18 +7,16 @@ import unittest
 
 def get_to_last(lst: LinkedList, k):
     """Returns kth to last value in linked list"""
-    if k <= 0:
+    if k <= 0 or k > lst.length:
         return None
     kth = lst.head
     last = lst.head
-    i = 0
-    while last is not None:
-        if i < k:
-            i += 1
-        else:
-            kth = kth.next
+    for i in range(k):
         last = last.next
-    return kth.val if i == k else None
+    while last is not None:
+        kth = kth.next
+        last = last.next
+    return kth.val
 
 
 class TestRemoveDups(unittest.TestCase):

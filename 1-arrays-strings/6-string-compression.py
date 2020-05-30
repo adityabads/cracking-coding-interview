@@ -13,7 +13,7 @@ def compress(s: str) -> str:
     if len(s) == 0:
         return ""
 
-    # Count repeated characters, store in array
+    # count repeated characters, store in array
     compressed = []
     count = 0
     for i in range(len(s)):
@@ -23,9 +23,8 @@ def compress(s: str) -> str:
         count += 1
     compressed.append(f"{s[-1]}{count}")
 
-    # Return compressed string if shorter than original
-    result = ''.join(compressed)
-    return result if len(result) < len(s) else s
+    # return compressed string if shorter than original
+    return min(s, "".join(compressed), key=len)
 
 
 class TestStringCompression(unittest.TestCase):

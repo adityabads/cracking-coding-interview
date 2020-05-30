@@ -9,14 +9,13 @@ def is_perm(s1: str, s2: str) -> bool:
     """Returns true iff `s1` and `s2` are permutations of another"""
     if len(s1) != len(s2):
         return False
-    d = defaultdict(int)
+    counts = defaultdict(int)
     for c in s1:
-        d[c] += 1
+        counts[c] += 1
     for c in s2:
-        d[c] -= 1
-    for c in d:
-        if d[c] != 0:
+        if counts[c] == 0:
             return False
+        counts[c] -= 1
     return True
 
 

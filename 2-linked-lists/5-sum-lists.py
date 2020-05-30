@@ -3,6 +3,7 @@
 # a single digit. The digits are stored in reverse order, such that the 1's
 # digit is at the head of the list. Write a function that adds the two numbers
 # and returns the sum as a linked list.
+# 
 # EXAMPLE
 # Input: (7 -> 1 -> 6) + (5 -> 9 -> 2). That is, 617 + 295.
 # Output: 2 -> 1 -> 9. That is, 912.
@@ -17,24 +18,25 @@ from linkedlist import LinkedList
 import unittest
 
 
-def add_lists(this: LinkedList, that: LinkedList):
-    addlst = []
-    thisptr = this.head
-    thatptr = that.head
+def add_lists(lst1: LinkedList, lst2: LinkedList):
+    # make ptr1 point to longer list
+    ptr1 = lst1.head
+    ptr2 = lst2.head
+    if len(lst1) < len(lst2):
+        ptr1, ptr2 = ptr2, ptr1
+
+    # add lists
+    result = LinkedList()
     carry = 0
-    while thisptr is not None or thatptr is not None:
-        selfval = thisptr.val if thisptr is not None else 0
-        otherval = thatptr.val if thatptr is not None else 0
-        add = selfval + otherval + carry
-        addlst.append(add % 10)
+    while ptr1 is not None:
+        add = ptr1.val + ptr2.val + carry if ptr2 is not None else ptr1.val + carry
+        result.append(add % 10)
         carry = add // 10
-        if thisptr is not None:
-            thisptr = thisptr.next
-        if thatptr is not None:
-            thatptr = thatptr.next
+        ptr1 = ptr1.next
+        ptr2 = ptr2.next if ptr2 is not None else None
     if carry > 0:
-        addlst.append(carry)
-    return LinkedList(addlst)
+        result.append(carry)
+    return result
 
 
 class TestSumLists(unittest.TestCase):
@@ -57,6 +59,7 @@ class TestSumLists(unittest.TestCase):
             x = [int(dig) for dig in x]
             y = [int(dig) for dig in y]
             self.assertEqual(str(add_lists(LinkedList(x), LinkedList(y))), add)
+            self.assertEqual(str(add_lists(LinkedList(y), LinkedList(x))), add)
 
 
 if __name__ == "__main__":

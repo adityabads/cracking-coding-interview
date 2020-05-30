@@ -9,24 +9,23 @@ from linkedlist import LinkedList
 import unittest
 
 
-def intersects(this: LinkedList, that: LinkedList) -> bool:
-    """Returns true iff linked lists intersect"""
-    thisptr = this.head
-    thatptr = that.head
-    # make thisptr point to the longer list
-    diff = len(this) - len(that)
+def intersection(lst1: LinkedList, lst2: LinkedList) -> bool:
+    """Returns intersecting node iff linked lists intersect, else None"""
+    # make ptr1 point to the longer list
+    ptr1 = lst1.head
+    ptr2 = lst2.head
+    diff = len(lst1) - len(lst2)
     if diff < 0:
-        thisptr, thatptr = thatptr, thisptr
+        ptr1, ptr2 = ptr2, ptr1
+
     # make both pointers equal length from the end
     # if lists intersect anywhere, then both lists must have the same end
     for i in range(abs(diff)):
-        thisptr = thisptr.next
-    while thisptr is not None and thatptr is not None:
-        if thisptr is thatptr:
-            return True
-        thisptr = thisptr.next
-        thatptr = thatptr.next
-    return False
+        ptr1 = ptr1.next
+    while ptr1 is not ptr2:
+        ptr1 = ptr1.next
+        ptr2 = ptr2.next
+    return ptr1
 
 
 class TestIntersection(unittest.TestCase):
@@ -41,7 +40,6 @@ class TestIntersection(unittest.TestCase):
         falses = [
             ["", ""],
             ["abc", ""],
-            ["", "abc"],
             ["aaaa", "aaaa"],
             ["bdeaa", "cflaa"],
             ["abc", "edsabc"]
@@ -53,11 +51,13 @@ class TestIntersection(unittest.TestCase):
             lstend = LinkedList(arrend)
             lst1.extend(lstend)
             lst2.extend(lstend)
-            self.assertTrue(intersects(lst1, lst2) and intersects(lst2, lst1))
+            self.assertEqual(intersection(lst1, lst2), lstend.head)
+            self.assertEqual(intersection(lst2, lst1), lstend.head)
         for arr1, arr2 in falses:
             lst1 = LinkedList(arr1)
             lst2 = LinkedList(arr2)
-            self.assertFalse(intersects(lst1, lst2) or intersects(lst2, lst1))
+            self.assertIsNone(intersection(lst1, lst2))
+            self.assertIsNone(intersection(lst2, lst1))
 
 
 if __name__ == "__main__":

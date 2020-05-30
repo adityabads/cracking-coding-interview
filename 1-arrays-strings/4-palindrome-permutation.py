@@ -8,20 +8,17 @@
 # Input: Tact Coa
 # Output: True (permutations: "taco cat", "atco eta", etc.)
 
-from collections import defaultdict
+from collections import Counter
 import unittest
 
 
 def is_palin_perm(s: str) -> bool:
     """Return true iff `s` is a permutation of a palindrome (or empty)"""
-    d = defaultdict(int)
-    for c in s:
-        if c.isalpha():
-            d[c.lower()] += 1
     # must be even number of every letter, excepting at most one letter
+    counts = Counter(s.lower())
     isoddcount = False
-    for c in d:
-        if d[c] % 2 == 1:
+    for c in counts:
+        if c.isalpha() and counts[c] % 2 == 1:
             if isoddcount:
                 return False
             isoddcount = True

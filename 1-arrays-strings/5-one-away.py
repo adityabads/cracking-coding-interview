@@ -14,10 +14,10 @@ import unittest
 
 def one_away(s1: str, s2: str) -> bool:
     """Returns true if `s1` and `s2` are one char different"""
-    diff = len(s1) - len(s2)
-    if diff < -1 or diff > 1:
-        return False
     # make `s1` the smaller string
+    diff = len(s1) - len(s2)
+    if abs(diff) > 1:
+        return False
     if diff > 0:
         s1, s2 = s2, s1
     for i in range(len(s1)):
@@ -36,7 +36,7 @@ class TestOneAway(unittest.TestCase):
             ["", "a"],
             ["pale", "pale"],
             ["pale", "ple"],
-            ["pales", "pale"],
+            ["pale", "pales"],
             ["pale", "pald"],
             ["pale", "bale"]
         ]
@@ -51,6 +51,8 @@ class TestOneAway(unittest.TestCase):
 
         for s1, s2 in trues:
             self.assertTrue(one_away(s1, s2))
+            self.assertEqual(s1, s1)
+            self.assertEqual(s2, s2)
         for s1, s2 in falses:
             self.assertFalse(one_away(s1, s2))
 
