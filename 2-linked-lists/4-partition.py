@@ -83,34 +83,40 @@ class LinkedList:
 
 class TestPartition(unittest.TestCase):
     def test_partition(self):
-        lst = LinkedList([1, 2, 3, 4, 5, 6, 7, 8])
-        self.assertTrue(lst.is_partitioned(6))
-        lst.partition(6)
-        self.assertTrue(lst.is_partitioned(6))
-        lst = LinkedList([9, 8, 2, 4, 7, 6, 3, 5])
-        self.assertFalse(lst.is_partitioned(4))
-        lst.partition(4)
-        self.assertTrue(lst.is_partitioned(4))
-        lst = LinkedList([3, 5, 8, 5, 10, 2, 1])
-        self.assertFalse(lst.is_partitioned(5))
-        lst.partition(5)
-        self.assertTrue(lst.is_partitioned(5))
+        tests = [
+            # array, valid partitions, invalid partitions
+            [None, [1, 5, 7], []],
+            [[1, 2, 3, 4, 5, 6, 7, 8], [-1, 3, 4.5, 7, 9], []],
+            [[9, 8, 2, 4, 7, 6, 3, 5], [], [3, 7, 4, 9]],
+            [[3, 5, 8, 5, 10, 2, 1], [], [5, 2, 9]]
+        ]
+
+        for arr, trueparts, falseparts in tests:
+            for i in trueparts:
+                lst = LinkedList(arr)
+                self.assertTrue(lst.is_partitioned(i))
+                lst.partition(i)
+                self.assertTrue(lst.is_partitioned(i))
+            for i in falseparts:
+                lst = LinkedList(arr)
+                self.assertFalse(lst.is_partitioned(i))
+                lst.partition(i)
+                self.assertTrue(lst.is_partitioned(i))
 
     def test_is_partitioned(self):
-        lst = LinkedList()
-        self.assertTrue(lst.is_partitioned(0))
-        lst = LinkedList([1])
-        self.assertTrue(lst.is_partitioned(0))
-        self.assertTrue(lst.is_partitioned(2))
-        lst = LinkedList([1, 2, 3, 7, 4, 8, 9])
-        self.assertTrue(lst.is_partitioned(2))
-        self.assertTrue(lst.is_partitioned(3.5))
-        self.assertTrue(lst.is_partitioned(4))
-        self.assertFalse(lst.is_partitioned(7))
-        lst = LinkedList([3, 5, 8, 5, 10, 2, 1])
-        self.assertFalse(lst.is_partitioned(5))
-        lst = LinkedList([3, 1, 2, 10, 5, 5, 8])
-        self.assertTrue(lst.is_partitioned(5))
+        tests = [
+            # array, valid partitions, invalid partitions
+            [None, [0, 1, 5], []],
+            [[1], [0, 1, 2], []],
+            [[1, 2, 3, 4, 5, 6, 7, 8], [-1, 3, 4.5, 7, 9], []],
+            [[3, 5, 8, 5, 10, 2, 1], [], [5, 2, 9]],
+            [[3, 1, 2, 10, 5, 5, 8], [5, 4], [8, 6, 3, 10]]
+        ]
+
+        for arr, trueparts, falseparts in tests:
+            lst = LinkedList(arr)
+            self.assertTrue(all(lst.is_partitioned(i) for i in trueparts))
+            self.assertFalse(any(lst.is_partitioned(i) for i in falseparts))
 
 
 if __name__ == "__main__":

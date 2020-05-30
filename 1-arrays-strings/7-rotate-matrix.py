@@ -17,10 +17,12 @@ def rotate_matrix(mat: List[List[int]]):
             # 4-way swap matrix entries between edges
             coords = [(i, j)]
             for k in range(1, 4):
-                coords.append(rotate_coord(coords[k - 1][0], coords[k - 1][1], n))
+                coords.append(rotate_coord(
+                    coords[k - 1][0], coords[k - 1][1], n))
             temp = mat[coords[3][0]][coords[3][1]]
             for k in reversed(range(1, 4)):
-                mat[coords[k][0]][coords[k][1]] = mat[coords[k - 1][0]][coords[k - 1][1]]
+                mat[coords[k][0]][coords[k][1]
+                                  ] = mat[coords[k - 1][0]][coords[k - 1][1]]
             mat[coords[0][0]][coords[0][1]] = temp
 
 
@@ -37,33 +39,45 @@ def rotate_coord(x: int, y: int, n: int) -> (int, int):
 
 class TestRotateMatrix(unittest.TestCase):
     def test_rotate_matrix(self):
-        m1 = [[0]]
-        rotate_matrix(m1)
-        self.assertEqual(m1, [[0]])
-        m2 = [[1, 2], [3, 4]]
-        rotate_matrix(m2)
-        self.assertEqual(m2, [[2, 4], [1, 3]])
-        m3 = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-        rotate_matrix(m3)
-        self.assertEqual(m3, [[3, 6, 9], [2, 5, 8], [1, 4, 7]])
+        tests = [
+            [
+                [[0]],
+                [[0]]
+            ],
+            [
+                [[1, 2], [3, 4]],
+                [[2, 4], [1, 3]]
+            ],
+            [
+                [[1, 2, 3], [4, 5, 6], [7, 8, 9]],
+                [[3, 6, 9], [2, 5, 8], [1, 4, 7]]
+            ]
+        ]
+
+        for matrix, rotated in tests:
+            rotate_matrix(matrix)
+            self.assertEqual(matrix, rotated)
 
     def test_rotate_coord(self):
-        self.assertEqual(rotate_coord(0, 0, 1), (0, 0))
+        tests = [
+            [(0, 0, 1), (0, 0)],
+            [(0, 0, 2), (1, 0)],
+            [(0, 1, 2), (0, 0)],
+            [(1, 0, 2), (1, 1)],
+            [(1, 1, 2), (0, 1)],
+            [(0, 0, 3), (2, 0)],
+            [(0, 1, 3), (1, 0)],
+            [(0, 2, 3), (0, 0)],
+            [(1, 0, 3), (2, 1)],
+            [(1, 1, 3), (1, 1)],
+            [(1, 2, 3), (0, 1)],
+            [(2, 0, 3), (2, 2)],
+            [(2, 1, 3), (1, 2)],
+            [(2, 2, 3), (0, 2)]
+        ]
 
-        self.assertEqual(rotate_coord(0, 0, 2), (1, 0))
-        self.assertEqual(rotate_coord(0, 1, 2), (0, 0))
-        self.assertEqual(rotate_coord(1, 0, 2), (1, 1))
-        self.assertEqual(rotate_coord(1, 1, 2), (0, 1))
-
-        self.assertEqual(rotate_coord(0, 0, 3), (2, 0))
-        self.assertEqual(rotate_coord(0, 1, 3), (1, 0))
-        self.assertEqual(rotate_coord(0, 2, 3), (0, 0))
-        self.assertEqual(rotate_coord(1, 0, 3), (2, 1))
-        self.assertEqual(rotate_coord(1, 1, 3), (1, 1))
-        self.assertEqual(rotate_coord(1, 2, 3), (0, 1))
-        self.assertEqual(rotate_coord(2, 0, 3), (2, 2))
-        self.assertEqual(rotate_coord(2, 1, 3), (1, 2))
-        self.assertEqual(rotate_coord(2, 2, 3), (0, 2))
+        for (x, y, n), rotated in tests:
+            self.assertEqual(rotate_coord(x, y, n), rotated)
 
 
 if __name__ == "__main__":

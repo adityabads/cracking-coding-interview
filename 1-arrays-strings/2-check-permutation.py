@@ -22,16 +22,25 @@ def is_perm(s1: str, s2: str) -> bool:
 
 class TestCheckPermutation(unittest.TestCase):
     def test_is_perm(self):
-        self.assertTrue(is_perm("", ""))
-        self.assertTrue(is_perm("abcdee", "abcdee"))
-        self.assertTrue(is_perm("abcdee", "bdecae"))
-        self.assertTrue(is_perm("abcdee", "eecbad"))
+        trues = [
+            ["", ""],
+            ["abcdee", "abcdee"],
+            ["abcdee", "bdecae"],
+            ["abcdee", "eecbad"]
+        ]
 
-        self.assertFalse(is_perm("", "a"))
-        self.assertFalse(is_perm("a", ""))
-        self.assertFalse(is_perm("abcdee", "eEcbad"))
-        self.assertFalse(is_perm("abcdee", "bdeecb"))
-        self.assertFalse(is_perm("abc", "abcb"))
+        falses = [
+            ["", "a"],
+            ["a", ""],
+            ["abcdee", "eEcbad"],   # case sensitive
+            ["abcdee", "bdeecb"],
+            ["abc", "abcb"]
+        ]
+
+        for s1, s2 in trues:
+            self.assertTrue(is_perm(s1, s2))
+        for s1, s2 in falses:
+            self.assertFalse(is_perm(s1, s2))
 
 
 if __name__ == "__main__":

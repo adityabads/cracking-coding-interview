@@ -30,20 +30,29 @@ def one_away(s1: str, s2: str) -> bool:
 
 class TestOneAway(unittest.TestCase):
     def test_one_away(self):
-        self.assertTrue(one_away("", ""))
-        self.assertTrue(one_away("a", ""))
-        self.assertTrue(one_away("", "a"))
-        self.assertTrue(one_away("pale", "pale"))
-        self.assertTrue(one_away("pale", "ple"))
-        self.assertTrue(one_away("pales", "pale"))
-        self.assertTrue(one_away("pale", "pald"))
-        self.assertTrue(one_away("pale", "bale"))
+        trues = [
+            ["", ""],
+            ["a", ""],
+            ["", "a"],
+            ["pale", "pale"],
+            ["pale", "ple"],
+            ["pales", "pale"],
+            ["pale", "pald"],
+            ["pale", "bale"]
+        ]
 
-        self.assertFalse(one_away("pale", "plea"))
-        self.assertFalse(one_away("", "ac"))
-        self.assertFalse(one_away("ac", ""))
-        self.assertFalse(one_away("pale", "bake"))
-        self.assertFalse(one_away("pal", "pull"))
+        falses = [
+            ["pale", "plea"],   # not all palindromes count
+            ["", "ac"],
+            ["ac", ""],
+            ["pale", "bake"],
+            ["pal", "pull"]
+        ]
+
+        for s1, s2 in trues:
+            self.assertTrue(one_away(s1, s2))
+        for s1, s2 in falses:
+            self.assertFalse(one_away(s1, s2))
 
 
 if __name__ == "__main__":

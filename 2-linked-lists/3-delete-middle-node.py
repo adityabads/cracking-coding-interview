@@ -55,6 +55,8 @@ class TestRemoveDups(unittest.TestCase):
         self.assertEqual(str(lst), "a b d f")
         lst.delete_middle_node(lst.head.next)
         self.assertEqual(str(lst), "a d f")
+        lst.delete_middle_node(lst.head.next)
+        self.assertEqual(str(lst), "a f")
 
 
 if __name__ == "__main__":

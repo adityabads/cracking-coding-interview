@@ -30,18 +30,14 @@ def is_palin_perm(s: str) -> bool:
 
 class TestPalindromePermutation(unittest.TestCase):
     def test_is_palin_perm(self):
-        self.assertTrue(is_palin_perm(""))
-        self.assertTrue(is_palin_perm("a"))
-        self.assertTrue(is_palin_perm("Aa"))
-        self.assertTrue(is_palin_perm("aaB"))
-        self.assertTrue(is_palin_perm("TacOcat"))
-        self.assertTrue(is_palin_perm("Tact Coa"))
-        self.assertTrue(is_palin_perm("Raecca r"))
-        self.assertTrue(is_palin_perm("raceecar"))
+        trues = ["", "a", "Aa", "aab", "TaCocat",
+                 "Tact Coa ", "Raecca r", "raceecar"]
+        falses = ["abc", "Raeccb r", "Raeca r", "aloha"]
 
-        self.assertFalse(is_palin_perm("Raeccb r"))
-        self.assertFalse(is_palin_perm("Raeca r"))
-        self.assertFalse(is_palin_perm("aloha"))
+        for test in trues:
+            self.assertTrue(is_palin_perm(test))
+        for test in falses:
+            self.assertFalse(is_palin_perm(test))
 
 
 if __name__ == "__main__":

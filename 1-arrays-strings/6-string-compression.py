@@ -30,12 +30,17 @@ def compress(s: str) -> str:
 
 class TestStringCompression(unittest.TestCase):
     def test_compress(self):
-        self.assertEqual(compress(""), "")
-        self.assertEqual(compress("a"), "a")
-        self.assertEqual(compress("aa"), "aa")
-        self.assertEqual(compress("abc"), "abc")
-        self.assertEqual(compress("aaa"), "a3")
-        self.assertEqual(compress("aabcccccaaa"), "a2b1c5a3")
+        tests = [
+            ["", ""],
+            ["a", "a"],
+            ["aa", "aa"],
+            ["abc", "abc"],
+            ["aaa", "a3"],
+            ["aabcccccaaa", "a2b1c5a3"]
+        ]
+
+        for string, expected in tests:
+            self.assertEqual(compress(string), expected)
 
 
 if __name__ == "__main__":

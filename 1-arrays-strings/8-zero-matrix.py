@@ -41,21 +41,32 @@ def zeroify(mat: List[List[int]]):
 
 class TestZeroMatrix(unittest.TestCase):
     def test_zeroify(self):
-        m1 = [[1, 2], [3, 4]]
-        zeroify(m1)
-        self.assertEqual(m1, [[1, 2], [3, 4]])
-        m2 = [[1, 2], [3, 0]]
-        zeroify(m2)
-        self.assertEqual(m2, [[1, 0], [0, 0]])
-        m3 = [[1, 2, 0], [4, 5, 6], [7, 8, 9]]
-        zeroify(m3)
-        self.assertEqual(m3, [[0, 0, 0], [4, 5, 0], [7, 8, 0]])
-        m4 = [[1, 2, 3], [0, 5, 6], [7, 8, 9]]
-        zeroify(m4)
-        self.assertEqual(m4, [[0, 2, 3], [0, 0, 0], [0, 8, 9]])
-        m5 = [[1, 2, 0, 4], [5, 0, 7, 8], [9, 10, 11, 12]]
-        zeroify(m5)
-        self.assertEqual(m5, [[0, 0, 0, 0], [0, 0, 0, 0], [9, 0, 0, 12]])
+        tests = [
+            [
+                [[1, 2], [3, 4]],
+                [[1, 2], [3, 4]]
+            ],
+            [
+                [[1, 2], [3, 0]],
+                [[1, 0], [0, 0]]
+            ],
+            [
+                [[1, 2, 0], [4, 5, 6], [7, 8, 9]],
+                [[0, 0, 0], [4, 5, 0], [7, 8, 0]]
+            ],
+            [
+                [[1, 2, 3], [0, 5, 6], [7, 8, 9]],
+                [[0, 2, 3], [0, 0, 0], [0, 8, 9]]
+            ],
+            [
+                [[1, 2, 0, 4], [5, 0, 7, 8], [9, 10, 11, 12]],
+                [[0, 0, 0, 0], [0, 0, 0, 0], [9, 0, 0, 12]]
+            ]
+        ]
+
+        for matrix, expected in tests:
+            zeroify(matrix)
+            self.assertEqual(matrix, expected)
 
 
 if __name__ == "__main__":

@@ -22,16 +22,25 @@ def is_substring(s1: str, s2: str) -> bool:
 
 class TestStringRotation(unittest.TestCase):
     def test_is_rotated(self):
-        self.assertTrue(is_rotated("", ""))
-        self.assertTrue(is_rotated("waterbottle", "erbottlewat"))
-        self.assertTrue(is_rotated("waaawa", "wawaaa"))
-        self.assertTrue(is_rotated("waaawa", "aaawaw"))
-        self.assertTrue(is_rotated("aaaaaa", "aaaaaa"))
+        trues = [
+            ["", ""],
+            ["waterbottle", "erbottlewat"],
+            ["waaawa", "wawaaa"],
+            ["waaawa", "aawawa"],
+            ["aaaaaa", "aaaaaa"]
+        ]
 
-        self.assertFalse(is_rotated("", "a"))
-        self.assertFalse(is_rotated("a", ""))
-        self.assertFalse(is_rotated("aawaaaw", "aaawawa"))
-        self.assertFalse(is_rotated("aawaaw", "aaawawa"))
+        falses = [
+            ["", "a"],
+            ["a", ""],
+            ["aawaaaw", "aaawawa"],
+            ["aawaaw", "aaawawa"]
+        ]
+
+        for s1, s2 in trues:
+            self.assertTrue(is_rotated(s1, s2))
+        for s1, s2 in falses:
+            self.assertFalse(is_rotated(s1, s2))
 
 
 if __name__ == "__main__":

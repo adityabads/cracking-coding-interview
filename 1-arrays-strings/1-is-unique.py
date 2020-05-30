@@ -27,12 +27,13 @@ def add_to_bitvec(bitvec: int, ind: int) -> int:
 
 class TestIsUnique(unittest.TestCase):
     def test_all_chars_unique(self):
-        self.assertTrue(all_chars_unique(""))
-        self.assertTrue(all_chars_unique("a"))
-        self.assertTrue(all_chars_unique("abc"))
-        self.assertTrue(all_chars_unique("Aabc;3"))
-        self.assertFalse(all_chars_unique("aabc;3"))
-        self.assertFalse(all_chars_unique("abc3;3"))
+        trues = ["", "a", "abc", "Aabc;3"]
+        falses = ["aa", "aabc;3", "abc3;3"]
+
+        for test in trues:
+            self.assertTrue(all_chars_unique(test))
+        for test in falses:
+            self.assertFalse(all_chars_unique(test))
 
 
 if __name__ == "__main__":

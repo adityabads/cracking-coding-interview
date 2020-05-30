@@ -20,13 +20,16 @@ def urlify(s: str, n: int):
 
 class TestUrlify(unittest.TestCase):
     def test_urlify(self):
-        self.assertEqual(urlify("abcde   ", 5), "abcde")
-        self.assertEqual(urlify("Mr John Smith    ", 13),
-                         "Mr%20John%20Smith")
-        self.assertEqual(urlify("Mr  John Smith    ", 14),
-                         r"Mr%20%20John%20Smith")
-        self.assertEqual(urlify("", 0), "")
-        self.assertEqual(urlify(" ", 1), "%20")
+        tests = [
+            [["abcde   ", 5], "abcde"],
+            [["Mr John Smith    ", 13], "Mr%20John%20Smith"],
+            [["Mr  John Smith    ", 14], r"Mr%20%20John%20Smith"],
+            [["", 0], ""],
+            [[" ", 1], "%20"]
+        ]
+
+        for [url, length], expected in tests:
+            self.assertEqual(urlify(url, length), expected)
 
 
 if __name__ == "__main__":

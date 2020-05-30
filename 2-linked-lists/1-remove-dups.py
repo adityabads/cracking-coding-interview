@@ -51,31 +51,30 @@ class LinkedList:
 
 class TestRemoveDups(unittest.TestCase):
     def test_remove_dups(self):
-        lst = LinkedList()
-        lst.remove_dups()
-        self.assertEqual(str(lst), "")
-        lst = LinkedList([1, 2, 3, 4, 5])
-        lst.remove_dups()
-        self.assertEqual(str(lst), "1 2 3 4 5")
-        lst = LinkedList([1, 2, 3, 1, 4, 5])
-        lst.remove_dups()
-        self.assertEqual(str(lst), "1 2 3 4 5")
-        lst = LinkedList([1, 2, 3, 4, 4, 4, 5])
-        lst.remove_dups()
-        self.assertEqual(str(lst), "1 2 3 4 5")
-        lst = LinkedList([1, 2, 1, 3, 4, 1, 5, 2, 5, 3])
-        lst.remove_dups()
-        self.assertEqual(str(lst), "1 2 3 4 5")
+        tests = [
+            [None, ""],
+            [[], ""],
+            [[1, 2, 3, 4, 5], "1 2 3 4 5"],
+            [[1, 2, 3, 1, 4, 5], "1 2 3 4 5"],
+            [[1, 2, 3, 4, 4, 4, 5], "1 2 3 4 5"],
+            [[1, 2, 1, 3, 4, 1, 5, 2, 5, 4, 3, 5], "1 2 3 4 5"],
+        ]
+
+        for arr, expected in tests:
+            lst = LinkedList(arr)
+            lst.remove_dups()
+            self.assertEqual(str(lst), expected)
 
     def test_linked_list(self):
-        lst = LinkedList()
-        self.assertEqual(str(lst), "")
-        lst = LinkedList([])
-        self.assertEqual(str(lst), "")
-        lst = LinkedList([1])
-        self.assertEqual(str(lst), "1")
-        lst = LinkedList([1, 2, 3, 4, 5])
-        self.assertEqual(str(lst), "1 2 3 4 5")
+        tests = [
+            [None, ""],
+            [[], ""],
+            [[1], "1"],
+            [[1, 2, 3, 4, 5], "1 2 3 4 5"]
+        ]
+
+        for arr, expected in tests:
+            self.assertEqual(str(LinkedList(arr)), expected)
 
 
 if __name__ == "__main__":
