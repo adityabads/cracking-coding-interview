@@ -3,7 +3,7 @@
 # function min which returns the minimum element? Push, pop and min should all
 # operate in 0(1) time.
 
-from stack import Stack
+from stack import Stack, test_stack
 import unittest
 
 
@@ -52,14 +52,14 @@ class StackMin:
         return self.stack.peek()[1]
 
 
-class TestStackMin(unittest.TestCase):
+class TestStackMin(test_stack(StackMin())):
 
     def test_min(self):
         tests = [
-            [1, 2, 3, 4, 5, 5, 6, 7, 8, 9],
-            [5, 6, 3, 5, 8, 9, 2, 5, 1, 7],
-            [4, 9, 3, 8, 5, 2, 4, 1, 5, 7],
-            [9, 8, 7, 6, 5, 5, 4, 3, 2, 1]
+            [1, 1, 2, 3, 4, 5, 5, 6, 7, 8, 9],
+            [5, 6, 3, 5, 8, 9, 2, 1, 5, 1, 7],
+            [4, 9, 3, 8, 5, 2, 4, 1, 5, 7, 1],
+            [9, 8, 7, 6, 5, 5, 4, 3, 2, 1, 1]
         ]
 
         for test in tests:
@@ -72,16 +72,6 @@ class TestStackMin(unittest.TestCase):
                 stack.pop()
             with self.assertRaises(Exception):
                 stack.min()
-
-    def test_stack(self):
-        arr = [i for i in range(5)]
-        stack = StackMin(arr)
-        self.assertEqual(str(stack), " ".join(map(str, reversed(arr))))
-        for val in reversed(arr):
-            self.assertEquals(stack.peek(), val)
-            self.assertEqual(stack.pop(), val)
-        with self.assertRaises(Exception):
-            stack.pop()
 
 
 if __name__ == "__main__":

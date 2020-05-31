@@ -62,16 +62,33 @@ class Stack:
         return self.length == 0
 
 
-class TestLinkedList(unittest.TestCase):
-    def test_stack(self):
-        arr = [i for i in range(5)]
-        stack = Stack(arr)
-        self.assertEqual(str(stack), " ".join(map(str, reversed(arr))))
-        for val in reversed(arr):
-            self.assertEquals(stack.peek(), val)
-            self.assertEqual(stack.pop(), val)
-        with self.assertRaises(Exception):
-            stack.pop()
+def test_stack(stack):
+    """Tests stack.push(), stack.peek(), stack.pop(), stack.isempty()"""
+    class TestStack(unittest.TestCase):
+        def test_stack(self):
+            test = [1, 3, 7, 4, 2, 9, 1, 5, 6, 5, 8]
+            self.assertTrue(stack.isempty())
+            for i in range(len(test)):
+                stack.push(test[i])
+                self.assertFalse(stack.isempty())
+                self.assertEqual(stack.peek(), test[i])
+                self.assertEqual(str(stack), " ".join(
+                    map(str, reversed(test[:i+1]))))
+            for i in range(len(test)):
+                self.assertFalse(stack.isempty())
+                self.assertEqual(str(stack), " ".join(
+                    map(str, reversed(test[:len(test)-i]))))
+                self.assertEqual(stack.peek(), test[-i-1])
+                self.assertEqual(stack.pop(), test[-i-1])
+            self.assertTrue(stack.isempty())
+            with self.assertRaises(Exception):
+                stack.pop()
+
+    return TestStack
+
+
+class TestBaseStack(test_stack(Stack())):
+    pass
 
 
 if __name__ == "__main__":
