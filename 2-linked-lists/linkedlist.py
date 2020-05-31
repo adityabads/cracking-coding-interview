@@ -22,7 +22,7 @@ class LinkedList:
         self.length = 0
         if arr is not None:
             for val in arr:
-                self.append_node(Node(val))
+                self.append(val)
 
     def __len__(self):
         return self.length
