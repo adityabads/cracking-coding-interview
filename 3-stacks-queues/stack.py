@@ -10,7 +10,6 @@ class Stack:
         def __init__(self, val, nxt=None):
             self.val = val
             self.next = nxt
-            self.min = None     # min value in substack
 
         def __str__(self):
             return str(self.val)
@@ -40,9 +39,6 @@ class Stack:
         n = self.Node(val)
         if self.length > 0:
             n.next = self.top
-            n.min = min(self.top.min, val)
-        else:
-            n.min = val
         self.top = n
         self.length += 1
 
@@ -55,21 +51,20 @@ class Stack:
         self.top = self.top.next
         return val
 
-    def min(self):
-        """Returns minimum value in stack"""
+    def peek(self):
+        """Returns top value from stack without removing"""
         if self.length == 0:
-            raise Exception("Called min on empty stack")
-        return self.top.min
+            raise Exception("Called peep on empty stack")
+        return self.top.val
 
 
 class TestLinkedList(unittest.TestCase):
-    # min tests are in 2-stack-min.py
-
     def test_stack(self):
         arr = [i for i in range(5)]
         stack = Stack(arr)
         self.assertEqual(str(stack), " ".join(map(str, reversed(arr))))
         for val in reversed(arr):
+            self.assertEquals(stack.peek(), val)
             self.assertEqual(stack.pop(), val)
         with self.assertRaises(Exception):
             stack.pop()
