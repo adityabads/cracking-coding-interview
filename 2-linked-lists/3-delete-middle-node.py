@@ -7,11 +7,11 @@
 # lnput: the node c from the linked list a->b->c->d->e->f
 # Result: nothing is returned, but the new linked list looks like a->b->d->e->f
 
-from linkedlist import Node, LinkedList
+from linkedlist import LinkedList
 import unittest
 
 
-def delete_middle_node(n: Node):
+def delete_middle_node(n: LinkedList.Node):
     """Deletes Node `n` in middle of linked list"""
     n.val = n.next.val
     n.next = n.next.next

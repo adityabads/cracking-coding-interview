@@ -1,19 +1,18 @@
 import unittest
 
 
-class Node:
-    """Node class for LinkedList"""
-
-    def __init__(self, val, nxt=None):
-        self.val = val
-        self.next = nxt
-
-    def __str__(self):
-        return str(self.val)
-
-
 class LinkedList:
     """Linked list class"""
+
+    class Node:
+        """Node class for LinkedList"""
+
+        def __init__(self, val, nxt=None):
+            self.val = val
+            self.next = nxt
+
+        def __str__(self):
+            return str(self.val)
 
     def __init__(self, arr=None):
         """Inits linked list with values in `arr`"""
@@ -37,7 +36,7 @@ class LinkedList:
 
     def append(self, val):
         """Append new node with value `val` to linked list"""
-        self.append_node(Node(val))
+        self.append_node(self.Node(val))
 
     def append_node(self, n: Node):
         """Append node `n` to linked list"""
