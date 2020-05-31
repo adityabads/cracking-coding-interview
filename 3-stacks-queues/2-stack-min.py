@@ -31,9 +31,8 @@ class StackMin:
 
     def push(self, val):
         """Adds value (and min value) to top of stack"""
-        minval = val if len(self.stack) == 0 else min(
-            self.stack.peek()[1], val)
-        self.stack.push((val, minval))
+        minv = val if self.stack.isempty() else min(self.stack.peek()[1], val)
+        self.stack.push((val, minv))
 
     def pop(self):
         """Removes and returns top value from stack"""
@@ -43,9 +42,12 @@ class StackMin:
         """Returns top value from stack without removing"""
         return self.stack.peek()[0]
 
+    def isempty(self):
+        return self.stack.isempty()
+
     def min(self):
         """Returns minimum value in stack"""
-        if len(self.stack) == 0:
+        if self.isempty():
             raise Exception("Called min on empty stack")
         return self.stack.peek()[1]
 

@@ -40,7 +40,7 @@ class LinkedList:
 
     def append_node(self, n: Node):
         """Append node `n` to linked list"""
-        if self.length == 0:
+        if self.isempty():
             self.head = n
         else:
             self.tail.next = n
@@ -51,6 +51,10 @@ class LinkedList:
         """Extend linked list with other linked list"""
         if other is not None:
             self.append_node(other.head)
+
+    def isempty(self) -> bool:
+        """Returns true iff linked list is empty"""
+        return self.length == 0
 
 
 class TestLinkedList(unittest.TestCase):

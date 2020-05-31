@@ -37,14 +37,14 @@ class Stack:
     def push(self, val):
         """Adds value to top of stack"""
         n = self.Node(val)
-        if self.length > 0:
+        if not self.isempty():
             n.next = self.top
         self.top = n
         self.length += 1
 
     def pop(self):
         """Removes and returns top value from stack"""
-        if self.length == 0:
+        if self.isempty():
             raise Exception("Called pop on empty stack")
         self.length -= 1
         val = self.top.val
@@ -53,9 +53,13 @@ class Stack:
 
     def peek(self):
         """Returns top value from stack without removing"""
-        if self.length == 0:
+        if self.isempty():
             raise Exception("Called peep on empty stack")
         return self.top.val
+
+    def isempty(self) -> bool:
+        """Returns true iff stack is empty"""
+        return self.length == 0
 
 
 class TestLinkedList(unittest.TestCase):
