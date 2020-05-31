@@ -17,16 +17,18 @@ class StackMin:
             for val in arr:
                 self.push(val)
 
+    def __iter__(self):
+        for (val, minval) in self.stack:
+            yield val
+
     def __len__(self):
         return len(self.stack)
 
     def __str__(self):
         """Returns string of values from stack top to bottom"""
         vals = []
-        curr = self.stack.top
-        while curr is not None:
-            vals.append(str(curr.val[0]))
-            curr = curr.next
+        for val in self:
+            vals.append(str(val))
         return " ".join(vals)
 
     def push(self, val):

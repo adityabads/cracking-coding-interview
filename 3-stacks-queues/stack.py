@@ -2,7 +2,7 @@ import unittest
 
 
 class Stack:
-    """Stack class that keeps track of min element"""
+    """Stack class"""
 
     class Node:
         """Node class for Stack"""
@@ -22,16 +22,20 @@ class Stack:
             for val in arr:
                 self.push(val)
 
+    def __iter__(self):
+        curr = self.top
+        while curr is not None:
+            yield curr.val
+            curr = curr.next
+
     def __len__(self):
         return self.length
 
     def __str__(self):
         """Returns string of values from stack top to bottom"""
         vals = []
-        curr = self.top
-        while curr is not None:
-            vals.append(str(curr))
-            curr = curr.next
+        for val in self:
+            vals.append(str(val))
         return " ".join(vals)
 
     def push(self, val):
@@ -54,7 +58,7 @@ class Stack:
     def peek(self):
         """Returns top value from stack without removing"""
         if self.isempty():
-            raise Exception("Called peep on empty stack")
+            raise Exception("Called peek on empty stack")
         return self.top.val
 
     def isempty(self) -> bool:
