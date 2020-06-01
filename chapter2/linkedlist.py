@@ -23,16 +23,17 @@ class LinkedList:
             for val in arr:
                 self.append(val)
 
+    def __iter__(self):
+        curr = self.head
+        while curr is not None:
+            yield curr.val
+            curr = curr.next
+
     def __len__(self):
         return self.length
 
     def __str__(self):
-        vals = []
-        curr = self.head
-        while curr is not None:
-            vals.append(str(curr))
-            curr = curr.next
-        return " ".join(vals)
+        return " ".join([str(val) for val in self])
 
     def append(self, val) -> None:
         """Append new node with value `val` to linked list"""

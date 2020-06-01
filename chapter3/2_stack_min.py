@@ -27,10 +27,7 @@ class StackMin(AbstractStack):
 
     def __str__(self):
         """Returns string of values in stack, top to bottom"""
-        vals = []
-        for val in self:
-            vals.append(str(val))
-        return " ".join(vals)
+        return " ".join([str(val) for val in self])
 
     def push(self, val) -> None:
         """Adds `val` (and current min value) to top of stack"""

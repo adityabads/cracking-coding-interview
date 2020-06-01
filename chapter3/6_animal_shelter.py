@@ -7,6 +7,7 @@
 # Create the data structures to maintain this system and implement operations
 # such as enqueue, dequeue_any, dequeue_dog, and dequeue_cat.
 
+from enum import Enum, auto, unique
 from myqueue import Queue
 import random
 from typing import List
@@ -14,14 +15,34 @@ import unittest
 
 
 class Animal:
-    """Class for animals in AnimalShelter"""
-    CAT = 1
-    DOG = 2
+    """Animal class for AnimalShelter"""
 
-    def __init__(self, kind: int, name: str, time: int = None):
-        self.kind = kind
+    def __init__(self, name: str, time: int = None):
         self.name = name
         self.time = time
+
+    def __str__(self):
+        return self.name
+
+
+class Cat(Animal):
+    """Cat class for AnimalShelter"""
+
+    def __init__(self, name):
+        super().__init__(name)
+
+    def __str__(self):
+        return f"Cat: {self.name}"
+
+
+class Dog(Animal):
+    """Dog class for AnimalShelter"""
+
+    def __init__(self, name):
+        super().__init__(name)
+
+    def __str__(self):
+        return f"Dog: {self.name}"
 
 
 class AnimalShelter():
@@ -35,13 +56,19 @@ class AnimalShelter():
             for animal in animals:
                 self.enqueue(animal)
 
+    def __str__(self):
+        animals = []
+        for animal in self:
+            animals.append(str(animal))
+        return ", ".join(animals)
+
     def enqueue(self, animal: Animal) -> None:
         """Add cat or dog Animal to animal shelter"""
         self.time += 1
         animal.time = self.time
-        if animal.kind == Animal.CAT:
+        if isinstance(animal, Cat):
             self.catq.add(animal)
-        elif animal.kind == Animal.DOG:
+        elif isinstance(animal, Dog):
             self.dogq.add(animal)
         else:
             raise TypeError("enqueue can only be called on dog or cat")
@@ -72,16 +99,17 @@ def generate_animals() -> (List[Animal], List[Animal], List[Animal]):
                 "Chloe", "Lucy", "Sophie", "Luna", "Gracie"]
     dognames = ["Charlie", "Max", "Buddy", "Oscar", "Milo",
                 "Bella", "Molly", 'Coco', "Ruby", "Lucy"]
-    animals = [Animal(Animal.CAT, name) for name in catnames]
-    animals.extend([Animal(Animal.DOG, name) for name in dognames])
+    animals = [Cat(name) for name in catnames]
+    animals.extend([Dog(name) for name in dognames])
     cats = []
     dogs = []
     random.shuffle(animals)
     for animal in animals:
-        if animal.kind == Animal.CAT:
+        if isinstance(animal, Cat):
             cats.append(animal)
-        elif animal.kind == Animal.DOG:
+        elif isinstance(animal, Dog):
             dogs.append(animal)
+    print(animals, cats, dogs)
     return animals, cats, dogs
 
 

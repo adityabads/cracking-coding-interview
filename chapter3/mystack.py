@@ -65,10 +65,7 @@ class Stack(AbstractStack):
 
     def __str__(self):
         """Returns space-separated string of values in stack, top to bottom"""
-        vals = []
-        for val in self:
-            vals.append(str(val))
-        return " ".join(vals)
+        return " ".join([str(val) for val in self])
 
     def push(self, val) -> None:
         """Adds `val` to top of stack"""
@@ -109,20 +106,20 @@ def test_stack(make_stack: Callable[[], AbstractStack]):
                 with self.subTest(test=test):
                     stack: AbstractStack = make_stack()
                     self.assertTrue(stack.isempty())
-                    for i in range(len(test)):
-                        stack.push(test[i])
+                    for val in test:
+                        stack.push(val)
                         self.assertFalse(stack.isempty())
-                        self.assertEqual(stack.peek(), test[i])
+                        self.assertEqual(stack.peek(), val)
 
         def test_stack_remove(self):
             tests = generate_tests()
             for test in tests:
                 with self.subTest(test=test):
                     stack: AbstractStack = make_stack(test)
-                    for i in range(len(test)):
+                    for val in reversed(test):
                         self.assertFalse(stack.isempty())
-                        self.assertEqual(stack.peek(), test[-i-1])
-                        self.assertEqual(stack.pop(), test[-i-1])
+                        self.assertEqual(stack.peek(), val)
+                        self.assertEqual(stack.pop(), val)
                     self.assertTrue(stack.isempty())
                     with self.assertRaises(Exception):
                         stack.pop()

@@ -27,17 +27,17 @@ class SetOfStacks(AbstractStack):
             for val in arr:
                 self.push(val)
 
+    def __iter__(self):
+        for stack in self.stackset:
+            for val in stack:
+                yield val
+
     def __len__(self):
         return self.length
 
     def __str__(self):
         """Returns space-separated string of values in stack, top to bottom"""
-        vals = []
-        currstack = self.stackset.top
-        while currstack is not None:
-            vals.append(str(currstack))
-            currstack = currstack.next
-        return " ".join(vals)
+        return " ".join([str(val) for val in self])
 
     def push(self, val) -> None:
         """Adds `val` to top of set of stacks, creating new stack if necessary"""

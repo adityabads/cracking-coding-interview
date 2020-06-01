@@ -17,10 +17,10 @@ class QueueUsingStacks(AbstractQueue):
     def __iter__(self):
         for val in self.removestack:
             yield val
-        added = []
+        addvals = []
         for val in self.addstack:
-            added.append(val)
-        for val in reversed(added):
+            addvals.append(val)
+        for val in reversed(addvals):
             yield val
 
     def __len__(self):
@@ -28,10 +28,7 @@ class QueueUsingStacks(AbstractQueue):
 
     def __str__(self):
         """Returns space-separated string of values in queue, front to back"""
-        vals = []
-        for val in self:
-            vals.append(str(val))
-        return " ".join(vals)
+        return " ".join([str(val) for val in self])
 
     def add(self, val) -> None:
         """Adds `val` to end of queue"""

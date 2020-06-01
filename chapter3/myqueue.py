@@ -66,10 +66,7 @@ class Queue(AbstractQueue):
 
     def __str__(self):
         """Returns space-separated string of values in queue, front to back"""
-        vals = []
-        for val in self:
-            vals.append(str(val))
-        return " ".join(vals)
+        return " ".join([str(val) for val in self])
 
     def add(self, val) -> None:
         """Adds `val` to end of queue"""
@@ -111,22 +108,20 @@ def test_queue(make_queue: Callable[[], AbstractQueue]):
                 with self.subTest(test=test):
                     q: AbstractQueue = make_queue()
                     self.assertTrue(q.isempty())
-                    for i in range(len(test)):
-                        with self.subTest(i=i):
-                            q.add(test[i])
-                            self.assertFalse(q.isempty())
-                            self.assertEqual(q.peek(), test[0])
+                    for val in test:
+                        q.add(val)
+                        self.assertFalse(q.isempty())
+                        self.assertEqual(q.peek(), test[0])
 
         def test_queue_remove(self):
             tests = generate_tests()
             for test in tests:
                 with self.subTest(test=test):
                     q: AbstractQueue = make_queue(test)
-                    for i in range(len(test)):
-                        with self.subTest(i=i):
-                            self.assertFalse(q.isempty())
-                            self.assertEqual(q.peek(), test[i])
-                            self.assertEqual(q.remove(), test[i])
+                    for val in test:
+                        self.assertFalse(q.isempty())
+                        self.assertEqual(q.peek(), val)
+                        self.assertEqual(q.remove(), val)
                     self.assertTrue(q.isempty())
                     with self.assertRaises(Exception):
                         q.remove()
