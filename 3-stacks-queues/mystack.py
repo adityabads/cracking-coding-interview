@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from test_generator import generate_tests
 from typing import Callable
 import unittest
 
@@ -100,35 +101,35 @@ class Stack(AbstractStack):
 def test_stack(make_stack: Callable[[], AbstractStack]):
     """Tests stack functions push(), peek(), pop(), isempty(),
     where `make_stack` returns a new stack"""
+
     class TestStack(unittest.TestCase):
         def test_stack_add(self):
-            stack: AbstractStack = make_stack()
-            test = [1, 3, 7, 4, 2, 9, 1, 5, 6, 5, 8]
-            self.assertTrue(stack.isempty())
-            for i in range(len(test)):
-                stack.push(test[i])
-                self.assertFalse(stack.isempty())
-                self.assertEqual(stack.peek(), test[i])
-                self.assertEqual(str(stack), " ".join(
-                    map(str, reversed(test[:i+1]))))
+            tests = generate_tests()
+            for test in tests:
+                with self.subTest(test=test):
+                    stack: AbstractStack = make_stack()
+                    self.assertTrue(stack.isempty())
+                    for i in range(len(test)):
+                        stack.push(test[i])
+                        self.assertFalse(stack.isempty())
+                        self.assertEqual(stack.peek(), test[i])
 
         def test_stack_remove(self):
-            test = [4, 8, 5, 3, 2, 7, 2, 9, 1, 5, 6]
-            stack: AbstractStack = make_stack(test)
-            for i in range(len(test)):
-                self.assertFalse(stack.isempty())
-                self.assertEqual(str(stack), " ".join(
-                    map(str, reversed(test[:len(test)-i]))))
-                self.assertEqual(stack.peek(), test[-i-1])
-                self.assertEqual(stack.pop(), test[-i-1])
-            self.assertTrue(stack.isempty())
-            with self.assertRaises(Exception):
-                stack.pop()
+            tests = generate_tests()
+            for test in tests:
+                with self.subTest(test=test):
+                    stack: AbstractStack = make_stack(test)
+                    for i in range(len(test)):
+                        self.assertFalse(stack.isempty())
+                        self.assertEqual(stack.peek(), test[-i-1])
+                        self.assertEqual(stack.pop(), test[-i-1])
+                    self.assertTrue(stack.isempty())
+                    with self.assertRaises(Exception):
+                        stack.pop()
 
         def test_stack_add_remove(self):
-            test1 = [7, 4, 8, 3, 5, 2]
-            test2 = [9, 4, 6]
-            test3 = [3, 7, 5, 4]
+            tests = generate_tests()
+            test1, test2, test3 = tests[-1], tests[-2], tests[-3]
             stack: AbstractStack = make_stack(test1)
             self.assertEqual(stack.pop(), test1[-1])
             for val in test2:

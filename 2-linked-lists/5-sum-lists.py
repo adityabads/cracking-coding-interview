@@ -15,6 +15,7 @@
 # Output: 9 -> 1 -> 2. That is, 912.
 
 from linkedlist import LinkedList
+import random
 import unittest
 
 
@@ -50,6 +51,8 @@ class TestSumLists(unittest.TestCase):
             [1, 183],
             [182, 2030]
         ]
+        tests.extend([[random.randint(0, 1000) for j in range(2)]
+                      for i in range(10)])
 
         for x, y in tests:
             with self.subTest(x=x, y=y):

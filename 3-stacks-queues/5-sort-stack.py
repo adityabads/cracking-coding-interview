@@ -5,6 +5,7 @@
 # following operations: push(), pop(), peek(), and isempty().
 
 from mystack import AbstractStack, Stack
+import random
 import unittest
 
 
@@ -33,21 +34,21 @@ def sort_stack(stack: AbstractStack) -> None:
 class TestSortStack(unittest.TestCase):
     def test_sort_stack(self):
         tests = [
-            [1, 1, 2, 3, 4, 5, 5, 6, 7, 8, 9],
-            [3, 1, 5, 9, 4, 2, 1, 7, 6, 5, 8],
-            [4, 9, 7, 1, 2, 6, 5, 3, 1, 8, 5],
-            [9, 8, 1, 7, 6, 5, 5, 4, 3, 2, 1]
+            [],
+            [0],
+            [i for i in range(10)],
+            [i for i in reversed(range(10))],
         ]
-        expected = [1, 1, 2, 3, 4, 5, 5, 6, 7, 8, 9]
-
-        stack = Stack()
-        sort_stack(stack)
+        # random with duplicates
+        tests.extend([[random.randint(0, 15) for i in range(20)]
+                      for j in range(10)])
 
         for test in tests:
             with self.subTest(test=test):
                 stack = Stack(test)
                 sort_stack(stack)
-                for val in expected:
+                test.sort()
+                for val in test:
                     self.assertEqual(stack.pop(), val)
 
 

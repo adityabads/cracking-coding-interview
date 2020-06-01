@@ -78,7 +78,7 @@ class TestLinkedList(unittest.TestCase):
             with self.subTest(arr=arr):
                 self.assertEqual(str(LinkedList(arr)), expected)
 
-    def test_append_node(self):
+    def test_extend(self):
         tests = [
             ["123", "456", "1 2 3 4 5 6", "4 5 6"],
             [None, "123", "1 2 3", "1 2 3"],

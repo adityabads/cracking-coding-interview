@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from test_generator import generate_tests
 from typing import Callable
 import unittest
 
@@ -105,33 +106,34 @@ def test_queue(make_queue: Callable[[], AbstractQueue]):
     where make_queue() returns a new queue"""
     class TestQueue(unittest.TestCase):
         def test_queue_add(self):
-            q: AbstractQueue = make_queue()
-            test = [1, 3, 7, 4, 2, 9, 1, 5, 6, 5, 8]
-            self.assertTrue(q.isempty())
-            for i in range(len(test)):
-                with self.subTest(i=i):
-                    q.add(test[i])
-                    self.assertFalse(q.isempty())
-                    self.assertEqual(q.peek(), test[0])
-                    self.assertEqual(str(q), " ".join(map(str, test[:i+1])))
+            tests = generate_tests()
+            for test in tests:
+                with self.subTest(test=test):
+                    q: AbstractQueue = make_queue()
+                    self.assertTrue(q.isempty())
+                    for i in range(len(test)):
+                        with self.subTest(i=i):
+                            q.add(test[i])
+                            self.assertFalse(q.isempty())
+                            self.assertEqual(q.peek(), test[0])
 
         def test_queue_remove(self):
-            test = [4, 8, 5, 3, 2, 7, 2, 9, 1, 5, 6]
-            q: AbstractQueue = make_queue(test)
-            for i in range(len(test)):
-                with self.subTest(i=i):
-                    self.assertFalse(q.isempty())
-                    self.assertEqual(str(q), " ".join(map(str, test[i:])))
-                    self.assertEqual(q.peek(), test[i])
-                    self.assertEqual(q.remove(), test[i])
-            self.assertTrue(q.isempty())
-            with self.assertRaises(Exception):
-                q.remove()
+            tests = generate_tests()
+            for test in tests:
+                with self.subTest(test=test):
+                    q: AbstractQueue = make_queue(test)
+                    for i in range(len(test)):
+                        with self.subTest(i=i):
+                            self.assertFalse(q.isempty())
+                            self.assertEqual(q.peek(), test[i])
+                            self.assertEqual(q.remove(), test[i])
+                    self.assertTrue(q.isempty())
+                    with self.assertRaises(Exception):
+                        q.remove()
 
         def test_queue_add_remove(self):
-            test1 = [7, 4, 8, 3, 5, 2]
-            test2 = [9, 4, 6]
-            test3 = [3, 7, 5, 4]
+            tests = generate_tests()
+            test1, test2, test3 = tests[-1], tests[-2], tests[-3]
             q: AbstractQueue = make_queue(test1)
             self.assertEqual(q.remove(), test1[0])
             for val in test2:

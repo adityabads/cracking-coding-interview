@@ -4,6 +4,7 @@
 # operate in 0(1) time.
 
 from mystack import AbstractStack, Stack, test_stack
+from test_generator import generate_tests
 import unittest
 
 
@@ -55,15 +56,8 @@ class StackMin(AbstractStack):
 
 
 class TestStackMin(test_stack(lambda x=None: StackMin(x))):
-
     def test_min(self):
-        tests = [
-            [1, 1, 2, 3, 4, 5, 5, 6, 7, 8, 9],
-            [5, 6, 3, 5, 8, 9, 2, 1, 5, 1, 7],
-            [4, 9, 3, 8, 5, 2, 4, 1, 5, 7, 1],
-            [9, 8, 7, 6, 5, 5, 4, 3, 2, 1, 1]
-        ]
-
+        tests = generate_tests()
         for test in tests:
             with self.subTest(test=test):
                 stack = StackMin()
