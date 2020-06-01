@@ -33,7 +33,7 @@ class QueueUsingStacks(AbstractQueue):
             vals.append(str(val))
         return " ".join(vals)
 
-    def add(self, val):
+    def add(self, val) -> None:
         """Adds `val` to end of queue"""
         self.addstack.push(val)
 
@@ -42,7 +42,7 @@ class QueueUsingStacks(AbstractQueue):
         if self.isempty():
             raise Exception("Called remove on empty queue")
         if self.removestack.isempty():
-            self.push_add_to_remove()
+            self.__push_add_to_remove()
         return self.removestack.pop()
 
     def peek(self):
@@ -50,14 +50,14 @@ class QueueUsingStacks(AbstractQueue):
         if self.isempty():
             raise Exception("Called peek on empty queue")
         if self.removestack.isempty():
-            self.push_add_to_remove()
+            self.__push_add_to_remove()
         return self.removestack.peek()
 
     def isempty(self) -> bool:
         """Returns true iff queue is empty"""
         return self.addstack.isempty() and self.removestack.isempty()
 
-    def push_add_to_remove(self):
+    def __push_add_to_remove(self) -> None:
         """Moves all elements in `addstack` to `removestack`, inverting order"""
         while not self.addstack.isempty():
             val = self.addstack.pop()

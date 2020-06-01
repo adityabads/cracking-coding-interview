@@ -39,7 +39,7 @@ class SetOfStacks(AbstractStack):
             currstack = currstack.next
         return " ".join(vals)
 
-    def push(self, val):
+    def push(self, val) -> None:
         """Adds `val` to top of set of stacks, creating new stack if necessary"""
         if self.isempty() or len(self.stackset.peek()) == self.MAXSIZE:
             s = Stack([val])
@@ -62,7 +62,7 @@ class SetOfStacks(AbstractStack):
         """Returns top value in set of stacks without removing"""
         return self.stackset.peek().peek()
 
-    def isempty(self):
+    def isempty(self) -> bool:
         """Returns true iff stack is empty"""
         return self.length == 0
 

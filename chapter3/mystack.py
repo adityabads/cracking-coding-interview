@@ -13,7 +13,7 @@ class AbstractStack(ABC):
         pass
 
     @abstractmethod
-    def push(self, val):
+    def push(self, val) -> None:
         """Adds `val` to top of stack"""
         pass
 
@@ -70,7 +70,7 @@ class Stack(AbstractStack):
             vals.append(str(val))
         return " ".join(vals)
 
-    def push(self, val):
+    def push(self, val) -> None:
         """Adds `val` to top of stack"""
         n = self.Node(val)
         if not self.isempty():

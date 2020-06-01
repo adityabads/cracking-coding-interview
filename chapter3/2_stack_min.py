@@ -32,7 +32,7 @@ class StackMin(AbstractStack):
             vals.append(str(val))
         return " ".join(vals)
 
-    def push(self, val):
+    def push(self, val) -> None:
         """Adds `val` (and current min value) to top of stack"""
         minval = val if self.isempty() else min(self.min(), val)
         self.stack.push((val, minval))
@@ -45,7 +45,7 @@ class StackMin(AbstractStack):
         """Returns top value in stack without removing"""
         return self.stack.peek()[0]
 
-    def isempty(self):
+    def isempty(self) -> bool:
         return self.stack.isempty()
 
     def min(self):
