@@ -31,18 +31,12 @@ class Cat(Animal):
     def __init__(self, name):
         super().__init__(name)
 
-    def __str__(self):
-        return f"Cat: {self.name}"
-
 
 class Dog(Animal):
     """Dog class for AnimalShelter"""
 
     def __init__(self, name):
         super().__init__(name)
-
-    def __str__(self):
-        return f"Dog: {self.name}"
 
 
 class AnimalShelter():
@@ -57,10 +51,9 @@ class AnimalShelter():
                 self.enqueue(animal)
 
     def __str__(self):
-        animals = []
-        for animal in self:
-            animals.append(str(animal))
-        return ", ".join(animals)
+        cats = [str(cat) for cat in self.catq]
+        dogs = [str(dog) for dog in self.dogq]
+        return f"Cats: {', '.join(cats)}\nDogs: {', '.join(dogs)}"
 
     def enqueue(self, animal: Animal) -> None:
         """Add cat or dog Animal to animal shelter"""
@@ -71,9 +64,9 @@ class AnimalShelter():
         elif isinstance(animal, Dog):
             self.dogq.add(animal)
         else:
-            raise TypeError("enqueue can only be called on dog or cat")
+            raise TypeError("enqueue can only be called on cat or dog")
 
-    def dequeue_any(self):
+    def dequeue_any(self) -> Animal:
         """Dequeue first animal in animal shelter"""
         if self.catq.isempty() and self.dogq.isempty():
             raise Exception("dequeue_any called on empty shelter")
@@ -84,11 +77,11 @@ class AnimalShelter():
         else:
             return self.dogq.remove()
 
-    def dequeue_cat(self):
+    def dequeue_cat(self) -> Cat:
         """Dequeue first cat in animal shelter"""
         return self.catq.remove()
 
-    def dequeue_dog(self):
+    def dequeue_dog(self) -> Dog:
         """Dequeue first dog in animal shelter"""
         return self.dogq.remove()
 
@@ -109,24 +102,23 @@ def generate_animals() -> (List[Animal], List[Animal], List[Animal]):
             cats.append(animal)
         elif isinstance(animal, Dog):
             dogs.append(animal)
-    print(animals, cats, dogs)
     return animals, cats, dogs
 
 
 class TestAnimalShelter(unittest.TestCase):
-    def test_dequeue_dog(self):
-        animals, _, dogs = generate_animals()
-        shelter = AnimalShelter(animals)
-        for i in range(len(dogs)):
-            with self.subTest(i=i):
-                self.assertEqual(shelter.dequeue_dog().name, dogs[i].name)
-
     def test_dequeue_cat(self):
         animals, cats, _ = generate_animals()
         shelter = AnimalShelter(animals)
         for i in range(len(cats)):
             with self.subTest(i=i):
                 self.assertEqual(shelter.dequeue_cat().name, cats[i].name)
+
+    def test_dequeue_dog(self):
+        animals, _, dogs = generate_animals()
+        shelter = AnimalShelter(animals)
+        for i in range(len(dogs)):
+            with self.subTest(i=i):
+                self.assertEqual(shelter.dequeue_dog().name, dogs[i].name)
 
     def test_dequeue_any(self):
         animals, _, _ = generate_animals()
