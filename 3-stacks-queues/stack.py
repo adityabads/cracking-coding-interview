@@ -1,7 +1,38 @@
+from abc import ABC, abstractmethod
+from typing import Callable
 import unittest
 
 
-class Stack:
+class AbstractStack(ABC):
+    """Abstract stack class"""
+
+    @abstractmethod
+    def __str__(self):
+        """Returns space-separated string of values in stack, top to bottom"""
+        pass
+
+    @abstractmethod
+    def push(self, val):
+        """Adds `val` to top of stack"""
+        pass
+
+    @abstractmethod
+    def pop(self):
+        """Removes and returns top value in stack"""
+        pass
+
+    @abstractmethod
+    def peek(self):
+        """Returns top value in stack without removing"""
+        pass
+
+    @abstractmethod
+    def isempty(self) -> bool:
+        """Returns true iff stack is empty"""
+        pass
+
+
+class Stack(AbstractStack):
     """Stack class"""
 
     class Node:
@@ -32,14 +63,14 @@ class Stack:
         return self.length
 
     def __str__(self):
-        """Returns string of values from stack top to bottom"""
+        """Returns space-separated string of values in stack, top to bottom"""
         vals = []
         for val in self:
             vals.append(str(val))
         return " ".join(vals)
 
     def push(self, val):
-        """Adds value to top of stack"""
+        """Adds `val` to top of stack"""
         n = self.Node(val)
         if not self.isempty():
             n.next = self.top
@@ -47,7 +78,7 @@ class Stack:
         self.length += 1
 
     def pop(self):
-        """Removes and returns top value from stack"""
+        """Removes and returns top value in stack"""
         if self.isempty():
             raise Exception("Called pop on empty stack")
         self.length -= 1
@@ -56,7 +87,7 @@ class Stack:
         return val
 
     def peek(self):
-        """Returns top value from stack without removing"""
+        """Returns top value in stack without removing"""
         if self.isempty():
             raise Exception("Called peek on empty stack")
         return self.top.val
@@ -66,10 +97,12 @@ class Stack:
         return self.length == 0
 
 
-def test_stack(stack):
-    """Tests stack.push(), stack.peek(), stack.pop(), stack.isempty()"""
+def test_stack(make_stack: Callable[[], AbstractStack]):
+    """Tests stack functions push(), peek(), pop(), isempty(),
+    where `make_stack` returns a new stack"""
     class TestStack(unittest.TestCase):
-        def test_stack(self):
+        def test_stack_add(self):
+            stack: AbstractStack = make_stack()
             test = [1, 3, 7, 4, 2, 9, 1, 5, 6, 5, 8]
             self.assertTrue(stack.isempty())
             for i in range(len(test)):
@@ -78,6 +111,10 @@ def test_stack(stack):
                 self.assertEqual(stack.peek(), test[i])
                 self.assertEqual(str(stack), " ".join(
                     map(str, reversed(test[:i+1]))))
+
+        def test_stack_remove(self):
+            test = [4, 8, 5, 3, 2, 7, 2, 9, 1, 5, 6]
+            stack: AbstractStack = make_stack(test)
             for i in range(len(test)):
                 self.assertFalse(stack.isempty())
                 self.assertEqual(str(stack), " ".join(
@@ -88,10 +125,29 @@ def test_stack(stack):
             with self.assertRaises(Exception):
                 stack.pop()
 
+        def test_stack_add_remove(self):
+            test1 = [7, 4, 8, 3, 5, 2]
+            test2 = [9, 4, 6]
+            test3 = [3, 7, 5, 4]
+            stack: AbstractStack = make_stack(test1)
+            self.assertEqual(stack.pop(), test1[-1])
+            for val in test2:
+                stack.push(val)
+            self.assertEqual(stack.pop(), test2[-1])
+            self.assertEqual(stack.pop(), test2[-2])
+            for val in test3:
+                stack.push(val)
+            for val in reversed(test3):
+                self.assertEqual(stack.pop(), val)
+            for val in reversed(test2[:len(test2)-2]):
+                self.assertEqual(stack.pop(), val)
+            for val in reversed(test1[:len(test1)-1]):
+                self.assertEqual(stack.pop(), val)
+
     return TestStack
 
 
-class TestBaseStack(test_stack(Stack())):
+class TestBaseStack(test_stack(lambda x=None: Stack(x))):
     pass
 
 

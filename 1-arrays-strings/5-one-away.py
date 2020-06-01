@@ -50,11 +50,11 @@ class TestOneAway(unittest.TestCase):
         ]
 
         for s1, s2 in trues:
-            self.assertTrue(one_away(s1, s2))
-            self.assertEqual(s1, s1)
-            self.assertEqual(s2, s2)
+            with self.subTest(s1=s1, s2=s2):
+                self.assertTrue(one_away(s1, s2))
         for s1, s2 in falses:
-            self.assertFalse(one_away(s1, s2))
+            with self.subTest(s1=s1, s2=s2):
+                self.assertFalse(one_away(s1, s2))
 
 
 if __name__ == "__main__":

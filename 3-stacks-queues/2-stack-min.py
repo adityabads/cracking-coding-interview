@@ -3,11 +3,11 @@
 # function min which returns the minimum element? Push, pop and min should all
 # operate in 0(1) time.
 
-from stack import Stack, test_stack
+from stack import AbstractStack, Stack, test_stack
 import unittest
 
 
-class StackMin:
+class StackMin(AbstractStack):
     """Stack class that keeps track of min element"""
 
     def __init__(self, arr=None):
@@ -25,23 +25,23 @@ class StackMin:
         return len(self.stack)
 
     def __str__(self):
-        """Returns string of values from stack top to bottom"""
+        """Returns string of values in stack, top to bottom"""
         vals = []
         for val in self:
             vals.append(str(val))
         return " ".join(vals)
 
     def push(self, val):
-        """Adds value (and min value) to top of stack"""
+        """Adds `val` (and current min value) to top of stack"""
         minval = val if self.isempty() else min(self.min(), val)
         self.stack.push((val, minval))
 
     def pop(self):
-        """Removes and returns top value from stack"""
+        """Removes and returns top value in stack"""
         return self.stack.pop()[0]
 
     def peek(self):
-        """Returns top value from stack without removing"""
+        """Returns top value in stack without removing"""
         return self.stack.peek()[0]
 
     def isempty(self):
@@ -54,7 +54,7 @@ class StackMin:
         return self.stack.peek()[1]
 
 
-class TestStackMin(test_stack(StackMin())):
+class TestStackMin(test_stack(lambda x=None: StackMin(x))):
 
     def test_min(self):
         tests = [
@@ -65,15 +65,16 @@ class TestStackMin(test_stack(StackMin())):
         ]
 
         for test in tests:
-            stack = StackMin()
-            for i in range(len(test)):
-                stack.push(test[i])
-                self.assertEqual(stack.min(), min(test[:i+1]))
-            for i in range(len(test)):
-                self.assertEqual(stack.min(), min(test[:len(test)-i]))
-                stack.pop()
-            with self.assertRaises(Exception):
-                stack.min()
+            with self.subTest(test=test):
+                stack = StackMin()
+                for i in range(len(test)):
+                    stack.push(test[i])
+                    self.assertEqual(stack.min(), min(test[:i+1]))
+                for i in range(len(test)):
+                    self.assertEqual(stack.min(), min(test[:len(test)-i]))
+                    stack.pop()
+                with self.assertRaises(Exception):
+                    stack.min()
 
 
 if __name__ == "__main__":

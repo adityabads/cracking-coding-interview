@@ -13,7 +13,7 @@ from linkedlist import LinkedList
 import unittest
 
 
-def partition(lst: LinkedList, x):
+def partition(lst: LinkedList, x) -> None:
     """Partitions linked list so all values >= x are at the end"""
     curr = lst.tail = lst.head
     while curr is not None:
@@ -59,15 +59,17 @@ class TestPartition(unittest.TestCase):
 
         for arr, trueparts, falseparts in tests:
             for i in trueparts:
-                lst = LinkedList(arr)
-                self.assertTrue(is_partitioned(lst, i))
-                partition(lst, i)
-                self.assertTrue(is_partitioned(lst, i))
+                with self.subTest(arr=arr, truepart=i):
+                    lst = LinkedList(arr)
+                    self.assertTrue(is_partitioned(lst, i))
+                    partition(lst, i)
+                    self.assertTrue(is_partitioned(lst, i))
             for i in falseparts:
-                lst = LinkedList(arr)
-                self.assertFalse(is_partitioned(lst, i))
-                partition(lst, i)
-                self.assertTrue(is_partitioned(lst, i))
+                with self.subTest(arr=arr, falsepart=i):
+                    lst = LinkedList(arr)
+                    self.assertFalse(is_partitioned(lst, i))
+                    partition(lst, i)
+                    self.assertTrue(is_partitioned(lst, i))
 
     def test_is_partitioned(self):
         tests = [

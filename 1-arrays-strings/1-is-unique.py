@@ -31,9 +31,11 @@ class TestIsUnique(unittest.TestCase):
         falses = ["aa", "aabc;3", "abc3;3"]
 
         for test in trues:
-            self.assertTrue(all_chars_unique(test))
+            with self.subTest(test=test):
+                self.assertTrue(all_chars_unique(test))
         for test in falses:
-            self.assertFalse(all_chars_unique(test))
+            with self.subTest(test=test):
+                self.assertFalse(all_chars_unique(test))
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@ from linkedlist import LinkedList
 import unittest
 
 
-def get_to_last(lst: LinkedList, k):
+def get_to_last(lst: LinkedList, k: int):
     """Returns kth to last value in linked list"""
     if k <= 0 or k > lst.length:
         return None

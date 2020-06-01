@@ -7,7 +7,7 @@ from typing import List
 import unittest
 
 
-def rotate_matrix(mat: List[List[int]]):
+def rotate_matrix(mat: List[List[int]]) -> None:
     """Rotates matrix `mat` clockwise 90 degrees"""
     n = len(mat)
     # iterate over each square "layer", starting from outer layer and moving inward
@@ -47,8 +47,9 @@ class TestRotateMatrix(unittest.TestCase):
         ]
 
         for matrix, rotated in tests:
-            rotate_matrix(matrix)
-            self.assertEqual(matrix, rotated)
+            with self.subTest(matrix=matrix):
+                rotate_matrix(matrix)
+                self.assertEqual(matrix, rotated)
 
 
 if __name__ == "__main__":

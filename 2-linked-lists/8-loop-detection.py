@@ -33,16 +33,17 @@ class TestLoopDetection(unittest.TestCase):
     def test_has_loop(self):
         tests = ["abcdef", "abcabc", "aaaa"]
         for test in tests:
-            lst = LinkedList(test)
-            self.assertFalse(has_loop(lst))
-            lst.append_node(lst.head)
-            self.assertTrue(has_loop(lst))
-            lst = LinkedList(test)
-            lst.append_node(lst.head.next)
-            self.assertTrue(has_loop(lst))
-            lst = LinkedList(test)
-            lst.append("a")
-            self.assertFalse(has_loop(lst))
+            with self.subTest(test=test):
+                lst = LinkedList(test)
+                self.assertFalse(has_loop(lst))
+                lst.append_node(lst.head)
+                self.assertTrue(has_loop(lst))
+                lst = LinkedList(test)
+                lst.append_node(lst.head.next)
+                self.assertTrue(has_loop(lst))
+                lst = LinkedList(test)
+                lst.append("a")
+                self.assertFalse(has_loop(lst))
 
 
 if __name__ == "__main__":

@@ -34,11 +34,11 @@ class LinkedList:
             curr = curr.next
         return " ".join(vals)
 
-    def append(self, val):
+    def append(self, val) -> None:
         """Append new node with value `val` to linked list"""
         self.append_node(self.Node(val))
 
-    def append_node(self, n: Node):
+    def append_node(self, n: Node) -> None:
         """Append node `n` to linked list"""
         if self.isempty():
             self.head = n
@@ -47,7 +47,7 @@ class LinkedList:
         self.tail = n
         self.length += 1
 
-    def extend(self, other):
+    def extend(self, other) -> None:
         """Extend linked list with other linked list"""
         if other is not None:
             self.append_node(other.head)
@@ -75,7 +75,8 @@ class TestLinkedList(unittest.TestCase):
         ]
 
         for arr, expected in tests:
-            self.assertEqual(str(LinkedList(arr)), expected)
+            with self.subTest(arr=arr):
+                self.assertEqual(str(LinkedList(arr)), expected)
 
     def test_append_node(self):
         tests = [
@@ -87,11 +88,12 @@ class TestLinkedList(unittest.TestCase):
         ]
 
         for arr1, arr2, expected1, expected2 in tests:
-            lst1 = LinkedList(arr1)
-            lst2 = LinkedList(arr2)
-            lst1.extend(lst2)
-            self.assertEqual(str(lst1), expected1)
-            self.assertEqual(str(lst2), expected2)
+            with self.subTest(arr1=arr1, arr2=arr2):
+                lst1 = LinkedList(arr1)
+                lst2 = LinkedList(arr2)
+                lst1.extend(lst2)
+                self.assertEqual(str(lst1), expected1)
+                self.assertEqual(str(lst2), expected2)
 
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@ from typing import List
 import unittest
 
 
-def zeroify(mat: List[List[int]]):
+def zeroify(mat: List[List[int]]) -> None:
     """Set rows and cols with zeros to all zeros"""
     m = len(mat)
     n = len(mat[0])
@@ -65,8 +65,9 @@ class TestZeroMatrix(unittest.TestCase):
         ]
 
         for matrix, expected in tests:
-            zeroify(matrix)
-            self.assertEqual(matrix, expected)
+            with self.subTest(matrix=matrix):
+                zeroify(matrix)
+                self.assertEqual(matrix, expected)
 
 
 if __name__ == "__main__":

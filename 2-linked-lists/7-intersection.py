@@ -46,18 +46,20 @@ class TestIntersection(unittest.TestCase):
         ]
 
         for arr1, arr2, arrend in trues:
-            lst1 = LinkedList(arr1)
-            lst2 = LinkedList(arr2)
-            lstend = LinkedList(arrend)
-            lst1.extend(lstend)
-            lst2.extend(lstend)
-            self.assertEqual(intersection(lst1, lst2), lstend.head)
-            self.assertEqual(intersection(lst2, lst1), lstend.head)
+            with self.subTest(arr1=arr1, arr2=arr2, arrend=arrend):
+                lst1 = LinkedList(arr1)
+                lst2 = LinkedList(arr2)
+                lstend = LinkedList(arrend)
+                lst1.extend(lstend)
+                lst2.extend(lstend)
+                self.assertEqual(intersection(lst1, lst2), lstend.head)
+                self.assertEqual(intersection(lst2, lst1), lstend.head)
         for arr1, arr2 in falses:
-            lst1 = LinkedList(arr1)
-            lst2 = LinkedList(arr2)
-            self.assertIsNone(intersection(lst1, lst2))
-            self.assertIsNone(intersection(lst2, lst1))
+            with self.subTest(arr1=arr1, arr2=arr2):
+                lst1 = LinkedList(arr1)
+                lst2 = LinkedList(arr2)
+                self.assertIsNone(intersection(lst1, lst2))
+                self.assertIsNone(intersection(lst2, lst1))
 
 
 if __name__ == "__main__":

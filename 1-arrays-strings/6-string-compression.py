@@ -39,7 +39,8 @@ class TestStringCompression(unittest.TestCase):
         ]
 
         for string, expected in tests:
-            self.assertEqual(compress(string), expected)
+            with self.subTest(string=string):
+                self.assertEqual(compress(string), expected)
 
 
 if __name__ == "__main__":

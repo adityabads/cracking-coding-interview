@@ -32,9 +32,11 @@ class TestPalindromePermutation(unittest.TestCase):
         falses = ["abc", "Raeccb r", "Raeca r", "aloha"]
 
         for test in trues:
-            self.assertTrue(is_palin_perm(test))
+            with self.subTest(test=test):
+                self.assertTrue(is_palin_perm(test))
         for test in falses:
-            self.assertFalse(is_palin_perm(test))
+            with self.subTest(test=test):
+                self.assertFalse(is_palin_perm(test))
 
 
 if __name__ == "__main__":

@@ -27,11 +27,13 @@ class TestPalindrome(unittest.TestCase):
         falses = ["abBa", "rac ecar", "billy"]
 
         for test in trues:
-            lst = LinkedList(test)
-            self.assertTrue(is_palindrome(lst))
+            with self.subTest(test=test):
+                lst = LinkedList(test)
+                self.assertTrue(is_palindrome(lst))
         for test in falses:
-            lst = LinkedList(test)
-            self.assertFalse(is_palindrome(lst))
+            with self.subTest(test=test):
+                lst = LinkedList(test)
+                self.assertFalse(is_palindrome(lst))
 
 
 if __name__ == "__main__":

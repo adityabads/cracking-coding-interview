@@ -1,6 +1,6 @@
 # Remove Dups
 # Write code to remove duplicates from an unsorted linked list.
-# 
+#
 # FOLLOWUP
 # How would you solve this problem if a temporary buffer is not allowed?
 
@@ -8,7 +8,7 @@ from linkedlist import LinkedList
 import unittest
 
 
-def remove_dups(lst: LinkedList):
+def remove_dups(lst: LinkedList) -> None:
     """Removes duplicate vals from linked list"""
     seen = set()
     prev = None
@@ -34,9 +34,10 @@ class TestRemoveDups(unittest.TestCase):
         ]
 
         for arr, expected in tests:
-            lst = LinkedList(arr)
-            remove_dups(lst)
-            self.assertEqual(str(lst), expected)
+            with self.subTest(arr=arr):
+                lst = LinkedList(arr)
+                remove_dups(lst)
+                self.assertEqual(str(lst), expected)
 
 
 if __name__ == "__main__":

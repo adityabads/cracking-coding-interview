@@ -10,7 +10,7 @@
 import unittest
 
 
-def urlify(s: str, n: int):
+def urlify(s: str, n: int) -> str:
     """Returns first `n` chars of string `s`, with spaces replaced with `%20`"""
     result = []
     for i in range(n):
@@ -29,7 +29,8 @@ class TestUrlify(unittest.TestCase):
         ]
 
         for [url, length], expected in tests:
-            self.assertEqual(urlify(url, length), expected)
+            with self.subTest(url=url, length=length):
+                self.assertEqual(urlify(url, length), expected)
 
 
 if __name__ == "__main__":

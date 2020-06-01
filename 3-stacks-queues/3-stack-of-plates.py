@@ -11,14 +11,14 @@
 # Implement a function popAt(int index) which performs a pop operation on a
 # specific sub-stack.
 
-from stack import Stack, test_stack
+from stack import AbstractStack, Stack, test_stack
 import unittest
 
 
-class SetOfStacks:
+class SetOfStacks(AbstractStack):
     """Set of stacks, each with a maximum size, behaving like a single stack"""
 
-    def __init__(self, max_stack_size: int = 5, arr=None):
+    def __init__(self, arr=None, max_stack_size: int = 5):
         """Inits set of stacks with values in `arr` and max stack size"""
         self.stackset = Stack()
         self.length = 0
@@ -31,7 +31,7 @@ class SetOfStacks:
         return self.length
 
     def __str__(self):
-        """Returns string of values from stack top to bottom"""
+        """Returns space-separated string of values in stack, top to bottom"""
         vals = []
         currstack = self.stackset.top
         while currstack is not None:
@@ -40,7 +40,7 @@ class SetOfStacks:
         return " ".join(vals)
 
     def push(self, val):
-        """Adds value to top of set of stacks, creating new one if necessary"""
+        """Adds `val` to top of set of stacks, creating new stack if necessary"""
         if self.isempty() or len(self.stackset.peek()) == self.MAXSIZE:
             s = Stack([val])
             self.stackset.push(s)
@@ -49,7 +49,7 @@ class SetOfStacks:
         self.length += 1
 
     def pop(self):
-        """Removes and returns top value from set of stacks"""
+        """Removes and returns top value in set of stacks"""
         if self.isempty():
             raise Exception("Called pop on empty stack")
         val = self.stackset.peek().pop()
@@ -59,14 +59,15 @@ class SetOfStacks:
         return val
 
     def peek(self):
-        """Returns top value from set of stacks without removing"""
+        """Returns top value in set of stacks without removing"""
         return self.stackset.peek().peek()
 
     def isempty(self):
+        """Returns true iff stack is empty"""
         return self.length == 0
 
 
-class TestSetOfStacks(test_stack(SetOfStacks())):
+class TestSetOfStacks(test_stack(lambda x=None: SetOfStacks(x))):
     pass
 
 

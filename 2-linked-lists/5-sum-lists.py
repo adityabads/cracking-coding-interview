@@ -3,7 +3,7 @@
 # a single digit. The digits are stored in reverse order, such that the 1's
 # digit is at the head of the list. Write a function that adds the two numbers
 # and returns the sum as a linked list.
-# 
+#
 # EXAMPLE
 # Input: (7 -> 1 -> 6) + (5 -> 9 -> 2). That is, 617 + 295.
 # Output: 2 -> 1 -> 9. That is, 912.
@@ -18,7 +18,7 @@ from linkedlist import LinkedList
 import unittest
 
 
-def add_lists(lst1: LinkedList, lst2: LinkedList):
+def add_lists(lst1: LinkedList, lst2: LinkedList) -> LinkedList:
     # make ptr1 point to longer list
     ptr1 = lst1.head
     ptr2 = lst2.head
@@ -52,14 +52,17 @@ class TestSumLists(unittest.TestCase):
         ]
 
         for x, y in tests:
-            add = str(x + y)[::-1]
-            add = " ".join(add)
-            x = str(x)[::-1]
-            y = str(y)[::-1]
-            x = [int(dig) for dig in x]
-            y = [int(dig) for dig in y]
-            self.assertEqual(str(add_lists(LinkedList(x), LinkedList(y))), add)
-            self.assertEqual(str(add_lists(LinkedList(y), LinkedList(x))), add)
+            with self.subTest(x=x, y=y):
+                add = str(x + y)[::-1]
+                add = " ".join(add)
+                x = str(x)[::-1]
+                y = str(y)[::-1]
+                x = [int(dig) for dig in x]
+                y = [int(dig) for dig in y]
+                self.assertEqual(
+                    str(add_lists(LinkedList(x), LinkedList(y))), add)
+                self.assertEqual(
+                    str(add_lists(LinkedList(y), LinkedList(x))), add)
 
 
 if __name__ == "__main__":
