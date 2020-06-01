@@ -10,25 +10,17 @@ import unittest
 
 
 def sort_stack(stack: AbstractStack) -> None:
-    temp = Stack()
+    tempstack = Stack()
     while not stack.isempty():
         val = stack.pop()
-        if temp.isempty() or val >= temp.peek():
-            # move vals to temp stack if in `val` order
-            temp.push(val)
-        else:
-            # move temp stack back to original, adding `val` in right place
-            inserted = False
-            while not temp.isempty():
-                tempval = temp.pop()
-                stack.push(tempval)
-                if not inserted and (temp.isempty() or val >= temp.peek()):
-                    stack.push(val)
-                    inserted = True
+        while not tempstack.isempty() and tempstack.peek() > val:
+            # move vals back to original until `val` can be inserted
+            stack.push(tempstack.pop())
+        tempstack.push(val)
 
     # move back to original
-    while not temp.isempty():
-        stack.push(temp.pop())
+    while not tempstack.isempty():
+        stack.push(tempstack.pop())
 
 
 class TestSortStack(unittest.TestCase):
