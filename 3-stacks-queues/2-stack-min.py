@@ -3,7 +3,7 @@
 # function min which returns the minimum element? Push, pop and min should all
 # operate in 0(1) time.
 
-from stack import AbstractStack, Stack, test_stack
+from mystack import AbstractStack, Stack, test_stack
 import unittest
 
 

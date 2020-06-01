@@ -1,12 +1,12 @@
 # Queue via Stacks
 # Implement a MyQueue class which implements a queue using two stacks.
 
-from queue import AbstractQueue, test_queue
-from stack import Stack
+from myqueue import AbstractQueue, test_queue
+from mystack import Stack
 import unittest
 
 
-class MyQueue(AbstractQueue):
+class QueueUsingStacks(AbstractQueue):
     def __init__(self, arr=None):
         self.addstack = Stack()
         self.removestack = Stack()
@@ -64,7 +64,7 @@ class MyQueue(AbstractQueue):
             self.removestack.push(val)
 
 
-class TestMyQueue(test_queue(lambda x=None: MyQueue(x))):
+class TestQueueUsingStacks(test_queue(lambda x=None: QueueUsingStacks(x))):
     pass
 
 

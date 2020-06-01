@@ -11,7 +11,7 @@
 # Implement a function popAt(int index) which performs a pop operation on a
 # specific sub-stack.
 
-from stack import AbstractStack, Stack, test_stack
+from mystack import AbstractStack, Stack, test_stack
 import unittest
 
 
