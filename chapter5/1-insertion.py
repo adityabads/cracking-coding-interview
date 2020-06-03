@@ -13,7 +13,8 @@
 import unittest
 
 
-def insert(n: int, m: int, i: int, j: int) -> int:
+def replace_bits(n: int, m: int, i: int, j: int) -> int:
+    """Replaces bits `j` through `i`, inclusive, in `m` with `n`"""
     # clear bits i through j
     # mask = ...111110000011
     #          ind:  j+1 i
@@ -23,7 +24,7 @@ def insert(n: int, m: int, i: int, j: int) -> int:
 
 
 class TestInsertion(unittest.TestCase):
-    def test_insert(self):
+    def test_replace_bits(self):
         tests = [
             # n, m, i, j, expected
             [0b10000000000, 0b10011, 2, 6, 0b10001001100],
@@ -32,7 +33,7 @@ class TestInsertion(unittest.TestCase):
         ]
         for n, m, i, j, expected in tests:
             with self.subTest(n=bin(n), m=bin(m), i=i, j=j):
-                self.assertEqual(insert(n, m, i, j), expected)
+                self.assertEqual(replace_bits(n, m, i, j), expected)
 
 
 if __name__ == "__main__":

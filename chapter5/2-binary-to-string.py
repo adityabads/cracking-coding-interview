@@ -7,6 +7,7 @@ import unittest
 
 
 def to_binary_string(n: float) -> str:
+    """Converts decimal between 0 and 1 to binary string with at most 32 chars"""
     if n <= 0 or n >= 1:
         raise Exception("to_binary_string() requires float between 0 and 1")
     result = ["."]

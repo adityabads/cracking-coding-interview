@@ -1,4 +1,7 @@
-Q: Explain what the following code does: 
+# Debugger
+
+Q: Explain what the following code does:
+
 ```python
 ((n & (n - 1)) == 0)
 ```
