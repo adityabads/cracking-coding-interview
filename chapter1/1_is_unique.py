@@ -9,20 +9,10 @@ def all_chars_unique(s: str) -> bool:
     """Returns true iff all chars in `s` are unique (or empty)"""
     bitvec = 0
     for c in s:
-        if in_bitvec(bitvec, ord(c)):
+        if (bitvec & (1 << ord(c))) != 0:
             return False
-        bitvec = add_to_bitvec(bitvec, ord(c))
+        bitvec |= (1 << ord(c))
     return True
-
-
-def in_bitvec(bitvec: int, ind: int) -> bool:
-    """Returns true iff bit `ind` is switched on in `bitvec`"""
-    return (bitvec & (1 << ind)) != 0
-
-
-def add_to_bitvec(bitvec: int, ind: int) -> int:
-    """Returns `bitvec` with bit `ind` switched on"""
-    return bitvec | (1 << ind)
 
 
 class TestIsUnique(unittest.TestCase):
