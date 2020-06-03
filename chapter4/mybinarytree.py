@@ -2,7 +2,9 @@ from collections import deque
 import unittest
 
 
-class Node:
+class TreeNode:
+    """Node class for binary tree"""
+
     def __init__(self, val, left=None, right=None):
         self.val = val
         self.left = left
@@ -12,160 +14,147 @@ class Node:
         return str(self.val)
 
 
-class BinaryTree:
-    def __init__(self, arr=None):
-        self.root = None
-        if arr:
-            self.root = BinaryTree.__insert_level_order(arr, self.root, 0)
+def make_tree(arr) -> TreeNode:
+    """Returns a binary tree with values in `arr`"""
+    root = None
+    if arr:
+        root = _insert_level_order(arr, root, 0)
+    return root
 
-    @staticmethod
-    def __insert_level_order(arr, n: Node, i: int) -> None:
-        """Inserts `arr[i]` into tree at node `n` recursively in level order"""
-        root = None
-        if i < len(arr) and arr[i] is not None:
-            # return desired node if in range
-            root = Node(arr[i])
-            # left node should have value `arr[2*i+1]`
-            root.left = BinaryTree.__insert_level_order(
-                arr, root.left, 2*i + 1)
-            # right node should have value `arr[2*i+2]`
-            root.right = BinaryTree.__insert_level_order(
-                arr, root.right, 2*i + 2)
-        return root
 
-    def height_iterative(self) -> int:
-        """Returns height of binary tree starting at `n` iteratively"""
-        q = deque([self.root])
-        height = 0
-        while True:
-            # height when no nodes left in level
-            nodesinlevel = len(q)
-            if nodesinlevel == 0:
-                return height
-            else:
-                height += 1
-            while nodesinlevel > 0:
-                n = q.popleft()
-                if n.left is not None:
-                    q.append(n.left)
-                if n.right is not None:
-                    q.append(n.right)
-                nodesinlevel -= 1
+def _insert_level_order(arr, n: TreeNode, i: int) -> None:
+    """Inserts `arr[i]` into tree at node `n` recursively in level order"""
+    root = None
+    if i < len(arr) and arr[i] is not None:
+        # return desired node if in range
+        root = TreeNode(arr[i])
+        # left node should have value `arr[2*i+1]`
+        root.left = _insert_level_order(arr, root.left, 2*i + 1)
+        # right node should have value `arr[2*i+2]`
+        root.right = _insert_level_order(arr, root.right, 2*i + 2)
+    return root
 
-    def height_recursive(self) -> int:
-        """Returns height of binary tree starting at `n` recursively"""
-        return BinaryTree.__height_util(self.root)
 
-    @staticmethod
-    def __height_util(n: Node) -> int:
-        """Returns height of binary tree starting at `n`"""
-        if n is None:
-            return 0
-        return max(BinaryTree.__height_util(n.left), BinaryTree.__height_util(n.right)) + 1
-
-    def in_traverse_iterative(self) -> None:
-        """Performs in-order iterative traversal through tree"""
-        n = self.root
-        stack = []
-        while n is not None or stack:
-            if n is not None:
-                stack.append(n)
-                n = n.left
-            else:
-                n = stack.pop()
-                print(n, end=" ")
-                n = n.right
-        print()
-
-    def pre_traverse_iterative(self) -> None:
-        """Performs pre-order iterative traversal through tree"""
-        stack = [self.root]
-        while stack:
-            n = stack.pop()
-            if n is not None:
-                # visit before children
-                print(n, end=" ")
-                stack.append(n.right)
-                stack.append(n.left)
-        print()
-
-    def post_traverse_iterative(self) -> None:
-        """Performs post-order iterative traversal through tree"""
-        printstack = []
-        stack = [self.root]
-        while stack:
-            n = stack.pop()
-            if n is not None:
-                # delay visiting until after children
-                printstack.append(n)
-                stack.append(n.left)
-                stack.append(n.right)
-        while printstack:
-            print(printstack.pop(), end=" ")
-        print()
-
-    def level_traverse_iterative(self) -> None:
-        """Performs level-order iterative traversal through tree"""
-        q = deque([self.root])
-        while q:
+def height_iterative(n: TreeNode) -> int:
+    """Returns height of binary tree starting at `n` iteratively"""
+    q = deque([n])
+    height = 0
+    while True:
+        # height when no nodes left in level
+        nodesinlevel = len(q)
+        if nodesinlevel == 0:
+            return height
+        else:
+            height += 1
+        while nodesinlevel > 0:
             n = q.popleft()
-            if n is not None:
-                print(n, end=" ")
+            if n.left is not None:
                 q.append(n.left)
+            if n.right is not None:
                 q.append(n.right)
-        print()
+            nodesinlevel -= 1
 
-    def in_traverse_recursive(self) -> None:
-        """Performs in-order traversal through tree recursively"""
-        BinaryTree.__in_traverse_util(self.root)
-        print()
 
-    def pre_traverse_recursive(self) -> None:
-        """Performs pre-order traversal through tree recursively"""
-        BinaryTree.__pre_traverse_util(self.root)
-        print()
+def height_recursive(n: TreeNode) -> int:
+    """Returns height of binary tree starting at `n` recursively"""
+    if n is None:
+        return 0
+    return max(height_recursive(n.left), height_recursive(n.right)) + 1
 
-    def post_traverse_recursive(self) -> None:
-        """Performs post-order traversal through tree recursively"""
-        BinaryTree.__post_traverse_util(self.root)
-        print()
 
-    def level_traverse_recursive(self) -> None:
-        """Performs level-order traversal through tree recursively"""
-        h = self.height_recursive()
-        for i in range(1, h+1):
-            BinaryTree.__level_traverse_util(self.root, i)
-        print()
-
-    @staticmethod
-    def __in_traverse_util(n: Node) -> None:
+def in_traverse_iterative(n: TreeNode) -> None:
+    """Performs in-order iterative traversal through tree"""
+    stack = []
+    while n is not None or stack:
         if n is not None:
-            BinaryTree.__in_traverse_util(n.left)
+            stack.append(n)
+            n = n.left
+        else:
+            n = stack.pop()
             print(n, end=" ")
-            BinaryTree.__in_traverse_util(n.right)
+            n = n.right
+    print()
 
-    @staticmethod
-    def __pre_traverse_util(n: Node) -> None:
+
+def pre_traverse_iterative(n: TreeNode) -> None:
+    """Performs pre-order iterative traversal through tree"""
+    stack = [n]
+    while stack:
+        n = stack.pop()
+        if n is not None:
+            # visit before children
+            print(n, end=" ")
+            stack.append(n.right)
+            stack.append(n.left)
+    print()
+
+
+def post_traverse_iterative(n: TreeNode) -> None:
+    """Performs post-order iterative traversal through tree"""
+    printstack = []
+    stack = [n]
+    while stack:
+        n = stack.pop()
+        if n is not None:
+            # delay visiting until after children
+            printstack.append(n)
+            stack.append(n.left)
+            stack.append(n.right)
+    while printstack:
+        print(printstack.pop(), end=" ")
+    print()
+
+
+def level_traverse_iterative(n: TreeNode) -> None:
+    """Performs level-order iterative traversal through tree"""
+    q = deque([n])
+    while q:
+        n = q.popleft()
         if n is not None:
             print(n, end=" ")
-            BinaryTree.__pre_traverse_util(n.left)
-            BinaryTree.__pre_traverse_util(n.right)
+            q.append(n.left)
+            q.append(n.right)
+    print()
 
-    @staticmethod
-    def __post_traverse_util(n: Node) -> None:
-        if n is not None:
-            BinaryTree.__post_traverse_util(n.left)
-            BinaryTree.__post_traverse_util(n.right)
+
+def in_traverse_recursive(n: TreeNode) -> None:
+    """Performs in-order traversal through tree recursively"""
+    if n is not None:
+        in_traverse_recursive(n.left)
+        print(n, end=" ")
+        in_traverse_recursive(n.right)
+
+
+def pre_traverse_recursive(n: TreeNode) -> None:
+    """Performs pre-order traversal through tree recursively"""
+    if n is not None:
+        print(n, end=" ")
+        pre_traverse_recursive(n.left)
+        pre_traverse_recursive(n.right)
+
+
+def post_traverse_recursive(n: TreeNode) -> None:
+    """Performs post-order traversal through tree recursively"""
+    if n is not None:
+        post_traverse_recursive(n.left)
+        post_traverse_recursive(n.right)
+        print(n, end=" ")
+
+
+def level_traverse_recursive(n: TreeNode) -> None:
+    """Performs level-order traversal through tree recursively"""
+    h = height_recursive(n)
+    for i in range(1, h+1):
+        _level_traverse_util(n, i)
+
+
+def _level_traverse_util(n: TreeNode, level: int) -> None:
+    if n is not None and level >= 1:
+        if level == 1:
             print(n, end=" ")
-
-    @staticmethod
-    def __level_traverse_util(n: Node, level: int) -> None:
-        if n is not None and level >= 1:
-            if level == 1:
-                print(n, end=" ")
-            else:
-                BinaryTree.__level_traverse_util(n.left, level-1)
-                BinaryTree.__level_traverse_util(n.right, level-1)
+        else:
+            _level_traverse_util(n.left, level-1)
+            _level_traverse_util(n.right, level-1)
 
 
 class TestBinaryTree(unittest.TestCase):
@@ -178,21 +167,25 @@ class TestBinaryTree(unittest.TestCase):
         for arr in arrs:
             print("---------------------------")
             print(arr)
-            tree = BinaryTree(arr)
+            tree = make_tree(arr)
             print("IN ORDER")
-            tree.in_traverse_recursive()
-            tree.in_traverse_iterative()
+            in_traverse_recursive(tree)
+            print()
+            in_traverse_iterative(tree)
             print("PRE ORDER")
-            tree.pre_traverse_recursive()
-            tree.pre_traverse_iterative()
+            pre_traverse_recursive(tree)
+            print()
+            pre_traverse_iterative(tree)
             print("POST ORDER")
-            tree.post_traverse_recursive()
-            tree.post_traverse_iterative()
+            post_traverse_recursive(tree)
+            print()
+            post_traverse_iterative(tree)
             print("LEVEL ORDER")
-            tree.level_traverse_recursive()
-            tree.level_traverse_iterative()
-            self.assertEqual(tree.height_iterative(), len(bin(len(arr))[2:]))
-            self.assertEqual(tree.height_recursive(), len(bin(len(arr))[2:]))
+            level_traverse_recursive(tree)
+            print()
+            level_traverse_iterative(tree)
+            self.assertEqual(height_iterative(tree), len(bin(len(arr))[2:]))
+            self.assertEqual(height_recursive(tree), len(bin(len(arr))[2:]))
 
 
 if __name__ == "__main__":
