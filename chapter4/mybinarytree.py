@@ -14,7 +14,7 @@ class TreeNode:
         return str(self.val)
 
 
-def make_tree(arr) -> TreeNode:
+def make_binary_tree(arr) -> TreeNode:
     """Returns a binary tree with values in `arr`"""
     root = None
     if arr:
@@ -159,15 +159,15 @@ def _level_traverse_util(n: TreeNode, level: int) -> None:
 
 class TestBinaryTree(unittest.TestCase):
     def test_binary_tree(self):
-        arrs = [[i for i in range(1, 6)],
+        arrs = [[i for i in range(1, 7)],
                 [i for i in range(1, 8)],
                 [i for i in range(1, 9)],
                 [i for i in range(1, 10)],
-                [1, 2, 3, 4, 5, 6, 7, 8, None, 9, 10]]
+                [1, 2, 3, 4, 5, 6, None, 7]]
         for arr in arrs:
             print("---------------------------")
             print(arr)
-            tree = make_tree(arr)
+            tree = make_binary_tree(arr)
             print("IN ORDER")
             in_traverse_recursive(tree)
             print()
