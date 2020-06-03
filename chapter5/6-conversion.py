@@ -30,8 +30,9 @@ class TestConversion(unittest.TestCase):
         ]
 
         for a, b, expected in tests:
-            self.assertEqual(bits_different(a, b), expected)
-            self.assertEqual(bits_different(b, a), expected)
+            with self.subTest(a=bin(a), b=bin(b)):
+                self.assertEqual(bits_different(a, b), expected)
+                self.assertEqual(bits_different(b, a), expected)
 
 
 if __name__ == "__main__":

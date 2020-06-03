@@ -26,8 +26,9 @@ class TestPairwiseSwap(unittest.TestCase):
         ]
 
         for n, expected in tests:
-            self.assertEqual(pairwise_bit_swap(n), expected)
-            self.assertEqual(expected, pairwise_bit_swap(n))
+            with self.subTest(n=bin(n)):
+                self.assertEqual(pairwise_bit_swap(n), expected)
+                self.assertEqual(expected, pairwise_bit_swap(n))
 
 
 if __name__ == "__main__":
