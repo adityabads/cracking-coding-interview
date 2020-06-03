@@ -9,7 +9,7 @@ def all_chars_unique(s: str) -> bool:
     """Returns true iff all chars in `s` are unique (or empty)"""
     bitvec = 0
     for c in s:
-        if (bitvec & (1 << ord(c))) != 0:
+        if bitvec & (1 << ord(c)):
             return False
         bitvec |= (1 << ord(c))
     return True
