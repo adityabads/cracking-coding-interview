@@ -8,7 +8,22 @@ import unittest
 
 def is_route(G: Graph, root: int, goal: int) -> bool:
     """Returns true iff there is a route between root and goal in graph G"""
-    return G.dfs_iterative(root, goal)
+    # Validate input
+    if root < 1 or root > len(G):
+        raise IndexError("dfs_iterative() called on out of bounds root")
+
+    # modified DFS
+    visited = [False] * (len(G) + 1)
+    stack = [G.nodes[root]]
+    while stack:
+        n = stack.pop()
+        if not visited[n.val]:
+            if n.val == goal:
+                return True
+            visited[n.val] = True
+            for neighbor in reversed(n.neighbors):
+                stack.append(neighbor)
+    return False
 
 
 class TestRouteBetweenNodes(unittest.TestCase):

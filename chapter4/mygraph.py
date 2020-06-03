@@ -69,18 +69,11 @@ class Graph:
         while stack:
             n = stack.pop()
             if not visited[n.val]:
-                if goal is not None:
-                    if n.val == goal:
-                        return True
-                else:
-                    print(n, end=" ")
+                print(n, end=" ")
                 visited[n.val] = True
                 for neighbor in reversed(n.neighbors):
                     stack.append(neighbor)
-        if goal is not None:
-            return False
-        else:
-            print()
+        print()
 
     def dfs_recursive(self, root: int) -> None:
         """Depth-first search from root, recursively"""
