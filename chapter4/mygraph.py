@@ -57,8 +57,8 @@ class Graph:
                     q.append(neighbor)
         print()
 
-    def dfs_iterative(self, root: int) -> None:
-        """Depth-first search from root, iteratively"""
+    def dfs_iterative(self, root: int, goal: int = None) -> bool:
+        """Depth-first search for goal from root, iteratively"""
         # Validate input
         if root < 1 or root > len(self):
             raise IndexError("dfs_iterative() called on out of bounds root")
@@ -69,11 +69,18 @@ class Graph:
         while stack:
             n = stack.pop()
             if not visited[n.val]:
-                print(n, end=" ")
+                if goal is not None:
+                    if n.val == goal:
+                        return True
+                else:
+                    print(n, end=" ")
                 visited[n.val] = True
                 for neighbor in reversed(n.neighbors):
                     stack.append(neighbor)
-        print()
+        if goal is not None:
+            return False
+        else:
+            print()
 
     def dfs_recursive(self, root: int) -> None:
         """Depth-first search from root, recursively"""
