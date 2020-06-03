@@ -35,6 +35,26 @@ def _insert_level_order(arr, n: TreeNode, i: int) -> None:
     return root
 
 
+def make_bst(arr) -> TreeNode:
+    """Returns a binary search tree made by inserting values in `arr` in order"""
+    root = None
+    if arr:
+        for val in arr:
+            root = insert_into_bst(root, val)
+    return root
+
+
+def insert_into_bst(root: TreeNode, val) -> None:
+    """Inserts `n` into binary search tree with root `root`"""
+    if root is None:
+        root = TreeNode(val)
+    elif val <= root.val:
+        root.left = insert_into_bst(root.left, val)
+    else:
+        root.right = insert_into_bst(root.right, val)
+    return root
+
+
 def height_iterative(n: TreeNode) -> int:
     """Returns height of binary tree starting at `n` iteratively"""
     q = deque([n])
@@ -186,6 +206,17 @@ class TestBinaryTree(unittest.TestCase):
             level_traverse_iterative(tree)
             self.assertEqual(height_iterative(tree), len(bin(len(arr))[2:]))
             self.assertEqual(height_recursive(tree), len(bin(len(arr))[2:]))
+
+    def test_binary_search_tree(self):
+        arrs = [
+            [2, 1, 3],
+            [2, 3, 1],
+            [1, 2, 3]
+        ]
+        for arr in arrs:
+            print(arr)
+            tree = make_bst(arr)
+            level_traverse_iterative(tree)
 
 
 if __name__ == "__main__":
