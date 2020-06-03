@@ -5,19 +5,13 @@ from mybinarytree import TreeNode, make_binary_tree
 import unittest
 
 
-def is_bst(root: TreeNode) -> bool:
-    """Returns true iff root is a binary search tree"""
-    return _is_bst_util(root)[0]
-
-
-def _is_bst_util(root: TreeNode) -> (bool, int, int):
-    """Returns true iff root is a binary search tree, and max and min values in tree"""
+def is_bst(root: TreeNode, minval: float = float("-inf"), maxval: float = float("inf")) -> bool:
+    """Returns true iff root is a binary search tree with all nodes in (minval, maxval)"""
     if root is None:
-        return True, float("inf"), float("-inf")
-    isleftbst, leftmin, leftmax = _is_bst_util(root.left)
-    isrightbst, rightmin, rightmax = _is_bst_util(root.right)
-    isbst = isleftbst and isrightbst and leftmax <= root.val and root.val < rightmin
-    return isbst, min(leftmin, root.val, rightmin), max(leftmax, root.val, rightmax)
+        return True
+    if root.val <= minval or root.val > maxval:
+        return False
+    return is_bst(root.left, minval, root.val) and is_bst(root.right, root.val, maxval)
 
 
 class TestValidateBST(unittest.TestCase):
