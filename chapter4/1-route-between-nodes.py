@@ -1,4 +1,5 @@
-# Route Between Nodes: Given a directed graph, design an algorithm to find out whether there is a
+# Route Between Nodes
+# Given a directed graph, design an algorithm to find out whether there is a
 # route between two nodes.
 
 from mygraph import Graph
@@ -6,6 +7,7 @@ import unittest
 
 
 def is_route(G: Graph, root: int, goal: int) -> bool:
+    """Returns true iff there is a route between root and goal in graph G"""
     return G.dfs_iterative(root, goal)
 
 
