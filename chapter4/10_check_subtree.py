@@ -40,7 +40,7 @@ def is_matching_tree(t1: TreeNode, t2: TreeNode) -> bool:
 
 
 class TestCheckSubtree(unittest.TestCase):
-    def test_check_has_subtree(self):
+    def test_check_is_subtree(self):
         tree1 = make_binary_tree([i for i in range(1, 8)])
         tree2 = make_binary_tree([2, 4, 5])
         tree3 = make_binary_tree([i for i in range(1, 7)])
