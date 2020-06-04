@@ -22,9 +22,9 @@ class Graph:
         self.nodes = [None]
         self.nodes.extend([Node(i) for i in range(1, n+1)])
         for (u, v) in edges:
-            self.nodes[u].neighbors.append(self.nodes[v])
+            self.add_edge(u, v)
             if undirected:
-                self.nodes[v].neighbors.append(self.nodes[u])
+                self.add_edge(v, u)
 
     def __len__(self):
         return len(self.nodes) - 1
@@ -35,6 +35,10 @@ class Graph:
             for neighbor in node.neighbors:
                 edges.append(map(str, [node, neighbor]))
         return " ".join(edges)
+
+    def add_edge(self, u: int, v: int) -> None:
+        """Adds edge (u, v) to graph"""
+        self.nodes[u].neighbors.append(self.nodes[v])
 
     def bfs(self, root: int) -> None:
         """Breadth-first search from root"""
