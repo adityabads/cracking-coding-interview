@@ -8,11 +8,13 @@ import unittest
 
 
 def first_common_ancestor(root: TreeNode, u: TreeNode, v: TreeNode) -> TreeNode:
+    """Returns first common ancestor of `u` and `v` in binary tree `root`"""
     # modified DFS
     return _first_common_ancestor_util(root, u, v)[0]
 
 
 def _first_common_ancestor_util(n: TreeNode, u: TreeNode, v: TreeNode) -> (TreeNode, bool, bool):
+    """Returns first common ancestor, True iff u is a descendant of `n`, and iff v is"""
     if n is None:
         return None, False, False
     leftnode, leftu, leftv = _first_common_ancestor_util(n.left, u, v)
