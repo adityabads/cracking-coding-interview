@@ -11,6 +11,6 @@ If p is the probability of making a particular shot, for which values of p shoul
 
 ## Answer
 
-The odds of winning the first game are p, and the odds of winning the second are p^3 + 3p^2. I should pick the first game when p > p^3 + 3p^2(1-p) ==> 2p^3 - 3p^2 + p > 0 ==> p(2p - 1)(p - 1) < 0
+The odds of winning the first game are p, and the odds of winning the second are p^3 + 3p^2. I should pick the first game when p > p^3 + 3p^2(1-p) ==> 2p^3 - 3p^2 + p > 0 ==> p(2p - 1)(p - 1) > 0
 
-Thus, when p is between 1/2 and 1, we should prefer the first game. When p = 0, or p = 1/2, or p = 1, the two games are equivalent.
+Thus, when 0 < p < 1/2, we should prefer the first game. When p = 0, or p = 1/2, or p = 1, the two games are equivalent.
