@@ -55,6 +55,30 @@ def insert_into_bst(root: TreeNode, val) -> None:
     return root
 
 
+def is_in_bst_iterative(root: TreeNode, val) -> bool:
+    """Returns true iff `val` is in binary search tree with root `root`, iteratively"""
+    while root is not None:
+        if val == root.val:
+            return True
+        elif val < root.val:
+            root = root.left
+        else:
+            root = root.right
+    return False
+
+
+def is_in_bst_recursive(root: TreeNode, val) -> bool:
+    """Returns true iff `val` is in binary search tree with root `root`, recursively"""
+    if root is None:
+        return False
+    if val == root.val:
+        return True
+    elif val < root.val:
+        return is_in_bst_recursive(root.left, val)
+    else:
+        return is_in_bst_recursive(root.right, val)
+
+
 def height_iterative(n: TreeNode) -> int:
     """Returns height of binary tree starting at `n` iteratively"""
     q = deque([n])
@@ -209,14 +233,20 @@ class TestBinaryTree(unittest.TestCase):
 
     def test_binary_search_tree(self):
         arrs = [
-            [2, 1, 3],
-            [2, 3, 1],
-            [1, 2, 3]
+            [2, 1, 3, 4, 6],
+            [2, 3, 1, 4, 6],
+            [1, 2, 3, 4, 6]
         ]
         for arr in arrs:
             print(arr)
             tree = make_bst(arr)
             level_traverse_iterative(tree)
+            for i in [1, 2, 3, 4, 6]:
+                self.assertTrue(is_in_bst_iterative(tree, i))
+                self.assertTrue(is_in_bst_recursive(tree, i))
+            for i in [0, 1.5, 5, 7]:
+                self.assertFalse(is_in_bst_iterative(tree, i))
+                self.assertFalse(is_in_bst_recursive(tree, i))
 
 
 if __name__ == "__main__":
