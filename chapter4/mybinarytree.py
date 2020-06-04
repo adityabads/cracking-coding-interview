@@ -5,10 +5,11 @@ import unittest
 class TreeNode:
     """Node class for binary tree"""
 
-    def __init__(self, val, left=None, right=None):
+    def __init__(self, val, left=None, right=None, parent=None):
         self.val = val
         self.left = left
         self.right = right
+        self.parent = parent
 
     def __str__(self):
         return str(self.val)
@@ -30,8 +31,12 @@ def _insert_level_order(arr, n: TreeNode, i: int) -> None:
         root = TreeNode(arr[i])
         # left node should have value `arr[2*i+1]`
         root.left = _insert_level_order(arr, root.left, 2*i + 1)
+        if root.left is not None:
+            root.left.parent = root
         # right node should have value `arr[2*i+2]`
         root.right = _insert_level_order(arr, root.right, 2*i + 2)
+        if root.right is not None:
+            root.right.parent = root
     return root
 
 
