@@ -7,7 +7,7 @@ from mybinarytree import TreeNode, make_binary_tree
 import unittest
 
 
-def successor(n: TreeNode) -> TreeNode:
+def in_order_successor(n: TreeNode) -> TreeNode:
     """Returns in-order successor of node in binary tree"""
     if n is None:
         return None
@@ -26,12 +26,20 @@ def successor(n: TreeNode) -> TreeNode:
 class TestSuccessor(unittest.TestCase):
     def test_successor(self):
         tree = make_binary_tree([1, 2, 3, 4, 5, 6, None, 7])
-        self.assertEqual(successor(tree.left).val, 5)
-        self.assertEqual(successor(tree.left.left).val, 2)
-        self.assertEqual(successor(tree.left.right).val, 1)
-        self.assertEqual(successor(tree).val, 6)
-        self.assertEqual(successor(tree.right.left).val, 3)
-        self.assertIsNone(successor(tree.right))
+        tests = [
+            # node, successor
+            [tree.left, tree.left.right],
+            [tree.left.left, tree.left],
+            [tree.left.left.left, tree.left.left],
+            [tree.left.right, tree],
+            [tree, tree.right.left],
+            [tree.right.left, tree.right],
+            [tree.right, None],
+            [None, None]
+        ]
+        for node, successor in tests:
+            with self.subTest(node=node.val if node is not None else None):
+                self.assertIs(in_order_successor(node), successor)
 
 
 if __name__ == "__main__":
