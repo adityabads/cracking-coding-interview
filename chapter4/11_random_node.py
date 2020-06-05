@@ -5,8 +5,7 @@
 # and implement an algorithm for getRandomNode, and explain how you would
 # implement the rest of the methods.
 
-from mybinarytree import TreeNode
-from mybst import make_bst
+from mybinarytree import TreeNode, make_binary_tree
 import random
 import unittest
 
@@ -29,7 +28,7 @@ def get_random_node(root: TreeNode) -> TreeNode:
 
 class TestRandomNode(unittest.TestCase):
     def test_get_random_node(self):
-        tree = make_bst([4, 2, 6, 1, 3, 5, 7])
+        tree = make_binary_tree([4, 2, 6, 1, 3, 5, 7])
         for i in range(30):
             print(get_random_node(tree), end=" ")
         print()

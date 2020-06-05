@@ -2,16 +2,8 @@
 # Implement a function to check if a binary tree is a binary search tree.
 
 from mybinarytree import TreeNode, make_binary_tree
+from mybst import make_bst, is_bst
 import unittest
-
-
-def is_bst(root: TreeNode, minval: float = float("-inf"), maxval: float = float("inf")) -> bool:
-    """Returns true iff root is a binary search tree with all nodes in (minval, maxval)"""
-    if root is None:
-        return True
-    if root.val <= minval or root.val > maxval:
-        return False
-    return is_bst(root.left, minval, root.val) and is_bst(root.right, root.val, maxval)
 
 
 class TestValidateBST(unittest.TestCase):
@@ -36,6 +28,8 @@ class TestValidateBST(unittest.TestCase):
             with self.subTest(arr=arr):
                 tree = make_binary_tree(arr)
                 self.assertFalse(is_bst(tree))
+                tree = make_bst(arr)
+                self.assertTrue(is_bst(tree))
 
 
 if __name__ == "__main__":
