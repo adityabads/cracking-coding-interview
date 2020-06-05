@@ -25,18 +25,29 @@ def zeroify(mat: List[List[int]]) -> None:
     # zero rows/cols depending on first col/row
     for i in range(m):
         if mat[i][0] == 0:
-            mat[i] = [0] * n
+            set_row_zero(mat, i)
     for j in range(n):
         if mat[0][j] == 0:
-            for i in range(m):
-                mat[i][j] = 0
+            set_col_zero(mat, j)
 
     # zero first row/col if necessary
     if zerofirstrow:
-        mat[0] = [0] * n
+        set_row_zero(mat, 0)
     if zerofirstcol:
-        for i in range(m):
-            mat[i][0] = 0
+        set_col_zero(mat, 0)
+
+
+def set_row_zero(mat: List[List[int]], i: int) -> None:
+    """Sets row `i` in matrix `mat` to all zeros"""
+    n = len(mat[0])
+    mat[i] = [0] * n
+
+
+def set_col_zero(mat: List[List[int]], j: int) -> None:
+    """Sets col `j` in matrix `mat` to all zeros"""
+    m = len(mat)
+    for i in range(m):
+        mat[i][j] = 0
 
 
 class TestZeroMatrix(unittest.TestCase):

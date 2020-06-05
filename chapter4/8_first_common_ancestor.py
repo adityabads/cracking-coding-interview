@@ -15,13 +15,13 @@ def first_common_ancestor(root: TreeNode, u: TreeNode, v: TreeNode) -> TreeNode:
 
 def _first_common_ancestor_util(n: TreeNode, u: TreeNode, v: TreeNode) -> (TreeNode, bool, bool):
     """Returns first common ancestor, True iff u is a descendant of `n`, and iff v is"""
-    if n is None:
+    if not n:
         return None, False, False
     leftnode, leftu, leftv = _first_common_ancestor_util(n.left, u, v)
     rightnode, rightu, rightv = _first_common_ancestor_util(n.right, u, v)
-    if leftnode is not None:
+    if leftnode:
         return leftnode, True, True
-    if rightnode is not None:
+    if rightnode:
         return rightnode, True, True
     uisdescendant = n is u or leftu or rightu
     visdescendant = n is v or leftv or rightv
@@ -47,7 +47,7 @@ class TestFirstCommonAncestor(unittest.TestCase):
             [tree.left.left, othertree, None]
         ]
         for u, v, ancestor in tests:
-            with self.subTest(u=u.val if u is not None else None, v=v.val if v is not None else None):
+            with self.subTest(u=u.val if u else None, v=v.val if v else None):
                 self.assertIs(first_common_ancestor(tree, u, v), ancestor)
                 self.assertIs(first_common_ancestor(tree, v, u), ancestor)
 

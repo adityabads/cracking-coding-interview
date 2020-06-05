@@ -9,16 +9,16 @@ import unittest
 
 def in_order_successor(n: TreeNode) -> TreeNode:
     """Returns in-order successor of node in binary tree"""
-    if n is None:
+    if not n:
         return None
     # if right subtree, return leftmost child of right subtree
-    if n.right is not None:
+    if n.right:
         n = n.right
-        while n.left is not None:
+        while n.left:
             n = n.left
         return n
     # else, backtrack until find new right subtree
-    while n.parent is not None and n.parent.right is n:
+    while n.parent and n.parent.right is n:
         n = n.parent
     return n.parent
 
@@ -38,7 +38,7 @@ class TestSuccessor(unittest.TestCase):
             [None, None]
         ]
         for node, successor in tests:
-            with self.subTest(node=node.val if node is not None else None):
+            with self.subTest(node=node.val if node else None):
                 self.assertIs(in_order_successor(node), successor)
 
 

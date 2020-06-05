@@ -51,13 +51,13 @@ class Queue(AbstractQueue):
         self.front = None
         self.back = None
         self.length = 0
-        if arr is not None:
+        if arr:
             for val in arr:
                 self.add(val)
 
     def __iter__(self):
         curr = self.front
-        while curr is not None:
+        while curr:
             yield curr.val
             curr = curr.next
 

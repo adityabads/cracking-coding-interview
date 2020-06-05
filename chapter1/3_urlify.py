@@ -15,7 +15,7 @@ def urlify(s: str, n: int) -> str:
     result = []
     for i in range(n):
         result.append(s[i]) if s[i] != " " else result.append("%20")
-    return ''.join(result)
+    return "".join(result)
 
 
 class TestUrlify(unittest.TestCase):
@@ -34,4 +34,4 @@ class TestUrlify(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    pass

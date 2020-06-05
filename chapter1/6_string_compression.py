@@ -10,8 +10,8 @@ import unittest
 
 def compress(s: str) -> str:
     """Compresses repeated characters if would make a shorter string"""
-    if len(s) == 0:
-        return ""
+    if not s:
+        return s
 
     # count repeated characters, store in array
     compressed = []

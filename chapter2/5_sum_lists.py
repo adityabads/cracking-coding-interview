@@ -29,12 +29,12 @@ def add_lists(lst1: LinkedList, lst2: LinkedList) -> LinkedList:
     # add lists
     result = LinkedList()
     carry = 0
-    while ptr1 is not None:
-        add = ptr1.val + ptr2.val + carry if ptr2 is not None else ptr1.val + carry
+    while ptr1:
+        add = ptr1.val + ptr2.val + carry if ptr2 else ptr1.val + carry
         result.append(add % 10)
         carry = add // 10
         ptr1 = ptr1.next
-        ptr2 = ptr2.next if ptr2 is not None else None
+        ptr2 = ptr2.next if ptr2 else None
     if carry > 0:
         result.append(carry)
     return result

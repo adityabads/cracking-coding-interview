@@ -11,9 +11,9 @@ import unittest
 
 
 def get_random_node(root: TreeNode) -> TreeNode:
-    while root is not None:
-        leftsize = root.left.size if root.left is not None else 0
-        rightsize = root.right.size if root.right is not None else 0
+    while root:
+        leftsize = root.left.size if root.left else 0
+        rightsize = root.right.size if root.right else 0
         rand = random.randint(0, leftsize + rightsize)
         if rand == 0:
             break

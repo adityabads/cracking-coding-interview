@@ -19,9 +19,9 @@ def list_of_depths(root: TreeNode) -> List[TreeNode]:
         while num_nodes_in_level > 0:
             n = q.popleft()
             nodes_in_level.append(n)
-            if n.left is not None:
+            if n.left:
                 q.append(n.left)
-            if n.right is not None:
+            if n.right:
                 q.append(n.right)
             num_nodes_in_level -= 1
         nodes.append(nodes_in_level)

@@ -50,13 +50,13 @@ class Stack(AbstractStack):
         """Inits stack with vals in `arr`"""
         self.top = None
         self.length = 0
-        if arr is not None:
+        if arr:
             for val in arr:
                 self.push(val)
 
     def __iter__(self):
         curr = self.top
-        while curr is not None:
+        while curr:
             yield curr.val
             curr = curr.next
 

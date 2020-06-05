@@ -14,7 +14,7 @@ def is_balanced(root: TreeNode) -> bool:
 
 def _is_balanced_util(root: TreeNode) -> (bool, int):
     """Returns true iff binary tree is balanced, and height of tree"""
-    if root is None:
+    if not root:
         return True, 0
     leftbalanced, leftheight = _is_balanced_util(root.left)
     rightbalanced, rightheight = _is_balanced_util(root.right)

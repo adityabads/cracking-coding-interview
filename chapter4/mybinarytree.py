@@ -30,17 +30,17 @@ def make_binary_tree(arr) -> TreeNode:
 def _insert_level_order(arr, n: TreeNode, i: int) -> None:
     """Inserts `arr[i]` into tree at node `n` recursively in level order"""
     root = None
-    if i < len(arr) and arr[i] is not None:
+    if i < len(arr) and arr[i]:
         # return desired node if in range
         root = TreeNode(arr[i])
         # left node should have value `arr[2*i+1]`
         root.left = _insert_level_order(arr, root.left, 2*i + 1)
-        if root.left is not None:
+        if root.left:
             root.left.parent = root
             root.size += root.left.size
         # right node should have value `arr[2*i+2]`
         root.right = _insert_level_order(arr, root.right, 2*i + 2)
-        if root.right is not None:
+        if root.right:
             root.right.parent = root
             root.size += root.right.size
     return root
@@ -59,16 +59,16 @@ def height_iterative(n: TreeNode) -> int:
             height += 1
         while nodesinlevel > 0:
             n = q.popleft()
-            if n.left is not None:
+            if n.left:
                 q.append(n.left)
-            if n.right is not None:
+            if n.right:
                 q.append(n.right)
             nodesinlevel -= 1
 
 
 def height_recursive(n: TreeNode) -> int:
     """Returns height of binary tree starting at `n` recursively"""
-    if n is None:
+    if not n:
         return 0
     return max(height_recursive(n.left), height_recursive(n.right)) + 1
 
@@ -76,8 +76,8 @@ def height_recursive(n: TreeNode) -> int:
 def in_traverse_iterative(n: TreeNode) -> None:
     """Performs in-order iterative traversal through tree"""
     stack = []
-    while n is not None or stack:
-        if n is not None:
+    while n or stack:
+        if n:
             stack.append(n)
             n = n.left
         else:
@@ -92,7 +92,7 @@ def pre_traverse_iterative(n: TreeNode) -> None:
     stack = [n]
     while stack:
         n = stack.pop()
-        if n is not None:
+        if n:
             # visit before children
             print(n, end=" ")
             stack.append(n.right)
@@ -106,7 +106,7 @@ def post_traverse_iterative(n: TreeNode) -> None:
     stack = [n]
     while stack:
         n = stack.pop()
-        if n is not None:
+        if n:
             # delay visiting until after children
             printstack.append(n)
             stack.append(n.left)
@@ -121,7 +121,7 @@ def level_traverse_iterative(n: TreeNode) -> None:
     q = deque([n])
     while q:
         n = q.popleft()
-        if n is not None:
+        if n:
             print(n, end=" ")
             q.append(n.left)
             q.append(n.right)
@@ -130,7 +130,7 @@ def level_traverse_iterative(n: TreeNode) -> None:
 
 def in_traverse_recursive(n: TreeNode) -> None:
     """Performs in-order traversal through tree recursively"""
-    if n is not None:
+    if n:
         in_traverse_recursive(n.left)
         print(n, end=" ")
         in_traverse_recursive(n.right)
@@ -138,7 +138,7 @@ def in_traverse_recursive(n: TreeNode) -> None:
 
 def pre_traverse_recursive(n: TreeNode) -> None:
     """Performs pre-order traversal through tree recursively"""
-    if n is not None:
+    if n:
         print(n, end=" ")
         pre_traverse_recursive(n.left)
         pre_traverse_recursive(n.right)
@@ -146,7 +146,7 @@ def pre_traverse_recursive(n: TreeNode) -> None:
 
 def post_traverse_recursive(n: TreeNode) -> None:
     """Performs post-order traversal through tree recursively"""
-    if n is not None:
+    if n:
         post_traverse_recursive(n.left)
         post_traverse_recursive(n.right)
         print(n, end=" ")
@@ -160,7 +160,7 @@ def level_traverse_recursive(n: TreeNode) -> None:
 
 
 def _level_traverse_util(n: TreeNode, level: int) -> None:
-    if n is not None and level >= 1:
+    if n and level >= 1:
         if level == 1:
             print(n, end=" ")
         else:

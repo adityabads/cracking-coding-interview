@@ -26,7 +26,7 @@ def insert_into_bst(root: TreeNode, val) -> None:
 
 def delete_from_bst(root: TreeNode, val) -> None:
     """Deletes val from binary search tree with root `root`"""
-    if not val or not root:
+    if val is None or not root:
         return None
 
     if val < root.val:

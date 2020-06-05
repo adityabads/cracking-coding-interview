@@ -17,11 +17,11 @@ import unittest
 def has_loop(lst: LinkedList) -> bool:
     """Returns true iff linked list has a loop"""
     slow = lst.head
-    if slow is not None:
+    if slow:
         fast = lst.head.next
     else:
         return False
-    while fast is not None and fast.next is not None:
+    while fast and fast.next:
         if slow is fast:
             return True
         slow = slow.next

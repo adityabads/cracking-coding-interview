@@ -16,7 +16,7 @@ import unittest
 def partition(lst: LinkedList, x) -> None:
     """Partitions linked list so all values >= x are at the end"""
     curr = lst.tail = lst.head
-    while curr is not None:
+    while curr:
         nxt = curr.next
         curr.next = None
         if curr.val < x:
@@ -27,7 +27,7 @@ def partition(lst: LinkedList, x) -> None:
             lst.tail = curr
         curr = nxt
 
-    if lst.tail is not None:
+    if lst.tail:
         lst.tail.next = None
 
 
@@ -35,7 +35,7 @@ def is_partitioned(lst: LinkedList, x) -> bool:
     """Returns true iff linked list partitioned on `x`"""
     frontpart = True
     curr = lst.head
-    while curr is not None:
+    while curr:
         val = curr.val
         # detect if partition reached (val >= x)
         if frontpart and val >= x:

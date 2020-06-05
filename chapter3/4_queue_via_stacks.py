@@ -10,7 +10,7 @@ class QueueUsingStacks(AbstractQueue):
     def __init__(self, arr=None):
         self.addstack = Stack()
         self.removestack = Stack()
-        if arr is not None:
+        if arr:
             for val in arr:
                 self.add(val)
 

@@ -7,11 +7,11 @@ import unittest
 
 def all_chars_unique(s: str) -> bool:
     """Returns true iff all chars in `s` are unique (or empty)"""
-    bitvec = 0
+    seen = set()
     for c in s:
-        if bitvec & (1 << ord(c)):
+        if c in seen:
             return False
-        bitvec |= (1 << ord(c))
+        seen.add(c)
     return True
 
 

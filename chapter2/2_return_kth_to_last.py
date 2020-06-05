@@ -13,7 +13,7 @@ def get_to_last(lst: LinkedList, k: int):
     last = lst.head
     for i in range(k):
         last = last.next
-    while last is not None:
+    while last:
         kth = kth.next
         last = last.next
     return kth.val

@@ -13,7 +13,7 @@ def remove_dups(lst: LinkedList) -> None:
     seen = set()
     prev = None
     curr = lst.head
-    while curr is not None:
+    while curr:
         if curr.val in seen:
             prev.next = curr.next
         else:

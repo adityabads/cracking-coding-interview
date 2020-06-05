@@ -12,27 +12,27 @@ import unittest
 
 def is_subtree(t1: TreeNode, t2: TreeNode) -> bool:
     """Returns if `t2` is a subtree of `t1` (by values, not reference)"""
-    if t2 is None:
+    if not t2:
         return True
-    if t1 is None:
+    if not t1:
         return False
     q = deque([t1])
     while q:
         n = q.popleft()
         if n.val == t2.val and is_matching_tree(n, t2):
             return True
-        if n.left is not None:
+        if n.left:
             q.append(n.left)
-        if n.right is not None:
+        if n.right:
             q.append(n.right)
     return False
 
 
 def is_matching_tree(t1: TreeNode, t2: TreeNode) -> bool:
     """Returns true iff `t1` and `t2` are the same trees (by values, not reference)"""
-    if t1 is None and t2 is None:
+    if not t1 and not t2:
         return True
-    elif t1 is None or t2 is None:
+    elif not t1 or not t2:
         return False
     elif t1.val != t2.val:
         return False

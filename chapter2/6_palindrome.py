@@ -10,11 +10,11 @@ def is_palindrome(lst: LinkedList) -> bool:
     """Returns true iff linked list is a palindrome"""
     stack = deque()
     curr = lst.head
-    while curr is not None:
+    while curr:
         stack.append(curr.val)
         curr = curr.next
     curr = lst.head
-    while curr is not None:
+    while curr:
         if curr.val != stack.pop():
             return False
         curr = curr.next

@@ -19,13 +19,13 @@ class LinkedList:
         self.head = None
         self.tail = None
         self.length = 0
-        if arr is not None:
+        if arr:
             for val in arr:
                 self.append(val)
 
     def __iter__(self):
         curr = self.head
-        while curr is not None:
+        while curr:
             yield curr.val
             curr = curr.next
 

@@ -46,7 +46,7 @@ class AnimalShelter():
         self.time = 0
         self.dogq = Queue()
         self.catq = Queue()
-        if animals is not None:
+        if animals:
             for animal in animals:
                 self.enqueue(animal)
 

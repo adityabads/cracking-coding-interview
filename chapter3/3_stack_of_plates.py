@@ -23,7 +23,7 @@ class SetOfStacks(AbstractStack):
         self.stackset = Stack()
         self.length = 0
         self.MAXSIZE = max_stack_size
-        if arr is not None:
+        if arr:
             for val in arr:
                 self.push(val)
 
