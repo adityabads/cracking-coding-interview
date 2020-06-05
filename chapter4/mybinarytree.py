@@ -5,14 +5,18 @@ import unittest
 class TreeNode:
     """Node class for binary tree"""
 
-    def __init__(self, val, left=None, right=None, parent=None):
+    def __init__(self, val, left=None, right=None, parent=None, size=1):
         self.val = val
         self.left = left
         self.right = right
         self.parent = parent
+        self.size = size
 
     def __str__(self):
         return str(self.val)
+
+    def __len__(self):
+        return self.size
 
 
 def make_binary_tree(arr) -> TreeNode:
@@ -33,10 +37,12 @@ def _insert_level_order(arr, n: TreeNode, i: int) -> None:
         root.left = _insert_level_order(arr, root.left, 2*i + 1)
         if root.left is not None:
             root.left.parent = root
+            root.size += root.left.size
         # right node should have value `arr[2*i+2]`
         root.right = _insert_level_order(arr, root.right, 2*i + 2)
         if root.right is not None:
             root.right.parent = root
+            root.size += root.right.size
     return root
 
 
@@ -55,8 +61,14 @@ def insert_into_bst(root: TreeNode, val) -> None:
         root = TreeNode(val)
     elif val <= root.val:
         root.left = insert_into_bst(root.left, val)
+        if root.left is not None:
+            root.left.parent = root
+            root.size += 1
     else:
         root.right = insert_into_bst(root.right, val)
+        if root.right is not None:
+            root.right.parent = root
+            root.size += 1
     return root
 
 
@@ -252,6 +264,45 @@ class TestBinaryTree(unittest.TestCase):
             for i in [0, 1.5, 5, 7]:
                 self.assertFalse(is_in_bst_iterative(tree, i))
                 self.assertFalse(is_in_bst_recursive(tree, i))
+
+    def test_parent(self):
+        trees = [
+            make_binary_tree([i for i in range(1, 8)]),
+            make_bst([4, 2, 6, 1, 3, 5, 7])
+        ]
+        for tree in trees:
+            tests = [
+                [tree, None],
+                [tree.left, tree],
+                [tree.left.left, tree.left],
+                [tree.left.right, tree.left],
+                [tree.right, tree],
+                [tree.right.left, tree.right],
+                [tree.right.right, tree.right]
+            ]
+            for node, parent in tests:
+                with self.subTest(node=node.val):
+                    self.assertIs(node.parent, parent)
+
+    def test_size(self):
+        trees = [
+            make_binary_tree([i for i in range(1, 9)]),
+            make_bst([4, 2, 6, 1, 3, 5, 7, 0])
+        ]
+        for tree in trees:
+            tests = [
+                [tree, 8],
+                [tree.left, 4],
+                [tree.left.left, 2],
+                [tree.left.left.left, 1],
+                [tree.left.right, 1],
+                [tree.right, 3],
+                [tree.right.left, 1],
+                [tree.right.right, 1]
+            ]
+            for node, size in tests:
+                with self.subTest(node=node.val):
+                    self.assertEqual(len(node), size)
 
 
 if __name__ == "__main__":
