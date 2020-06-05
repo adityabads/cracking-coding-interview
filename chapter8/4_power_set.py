@@ -30,12 +30,12 @@ def _power_set_util(s: Set) -> Set[Tuple]:
 
 def power_set_memo(s: Set) -> List[Set]:
     """Returns power set of s"""
-    sets = _power_set_memo_util(s, {})
+    sets = _power_set_memo_util(s)
     sets.append(set())
     return sets
 
 
-def _power_set_memo_util(s: Set, memo: Dict[Tuple, List[Tuple]] = None) -> List[Tuple]:
+def _power_set_memo_util(s: Set, memo: Dict[Tuple, List[Set]] = None) -> List[Set]:
     if not s:
         return []
     if memo is None:
@@ -46,7 +46,8 @@ def _power_set_memo_util(s: Set, memo: Dict[Tuple, List[Tuple]] = None) -> List[
         tuple_s_minus_si = tuple(s_minus_si)
         if tuple_s_minus_si not in memo:
             memo[tuple_s_minus_si] = _power_set_memo_util(s_minus_si, memo)
-            sets.extend([subset for subset in memo[tuple_s_minus_si] if subset])
+            sets.extend(
+                [subset for subset in memo[tuple_s_minus_si] if subset])
     return sets
 
 
