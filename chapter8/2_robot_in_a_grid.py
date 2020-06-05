@@ -5,7 +5,7 @@
 # Design an algorithm to find a path for the robot from the top left to
 # the bottom right.
 
-from typing import List
+from typing import Dict, List, Tuple
 import unittest
 
 # f(i, j) =     [(i, j)],               (i, j) = (0, 0)
@@ -14,7 +14,7 @@ import unittest
 #               f(i, j-1) + [(i, j)],   f(i, j-1) != null
 
 
-def find_path(grid: List[List[bool]], i: int = None, j: int = None) -> List[str]:
+def find_path(grid: List[List[bool]], i: int = None, j: int = None) -> List[Tuple[int, int]]:
     if i is None:
         i = len(grid) - 1
     if j is None:
@@ -40,7 +40,7 @@ def find_path(grid: List[List[bool]], i: int = None, j: int = None) -> List[str]
 
 
 def find_path_memo(grid: List[List[bool]], i: int = None, j: int = None,
-                   memo=None) -> List[str]:
+                   memo: Dict[Tuple[int, int], List[Tuple[int, int]]] = None) -> List[Tuple[int, int]]:
     if i is None:
         i = len(grid) - 1
     if j is None:

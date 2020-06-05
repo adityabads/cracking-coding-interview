@@ -4,6 +4,7 @@
 # heights of the two subtrees of any node never differ by more than one.
 
 from mybinarytree import TreeNode, make_binary_tree
+from typing import Tuple
 import unittest
 
 
@@ -12,7 +13,7 @@ def is_balanced(root: TreeNode) -> bool:
     return _is_balanced_util(root)[0]
 
 
-def _is_balanced_util(root: TreeNode) -> (bool, int):
+def _is_balanced_util(root: TreeNode) -> Tuple[bool, int]:
     """Returns true iff binary tree is balanced, and height of tree"""
     if not root:
         return True, 0

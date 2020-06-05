@@ -4,6 +4,7 @@
 # NOTE: This is not necessarily a binary search tree.
 
 from mybinarytree import TreeNode, make_binary_tree
+from typing import Tuple
 import unittest
 
 
@@ -13,7 +14,7 @@ def first_common_ancestor(root: TreeNode, u: TreeNode, v: TreeNode) -> TreeNode:
     return _first_common_ancestor_util(root, u, v)[0]
 
 
-def _first_common_ancestor_util(n: TreeNode, u: TreeNode, v: TreeNode) -> (TreeNode, bool, bool):
+def _first_common_ancestor_util(n: TreeNode, u: TreeNode, v: TreeNode) -> Tuple[TreeNode, bool, bool]:
     """Returns first common ancestor, True iff u is a descendant of `n`, and iff v is"""
     if not n:
         return None, False, False
