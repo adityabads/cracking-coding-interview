@@ -78,18 +78,21 @@ def quick_sort(arr: List[int], l: int = 0, r: int = None) -> None:
 
 def _partition(arr: List[int], l: int, r: int) -> int:
     """Partitions `arr[l...r]` by value of middle element, returns index of partition"""
-    pivot = arr[l]
+    pivot = arr[(l+r)//2]
     i = l-1
     j = r+1
     while True:
         i += 1
         while arr[i] < pivot:
             i += 1
+
         j -= 1
         while arr[j] > pivot:
             j -= 1
+
         if i >= j:
             return j
+
         arr[i], arr[j] = arr[j], arr[i]
 
 
