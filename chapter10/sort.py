@@ -71,31 +71,27 @@ def quick_sort(arr: List[int], l: int = 0, r: int = None) -> None:
     """Quick sort arr[l:r+1]"""
     if r is None:
         r = len(arr) - 1
-    if r > l:
+    if l < r:
         index = _partition(arr, l, r)
-        quick_sort(arr, l, index-1)
+        quick_sort(arr, l, index)
         quick_sort(arr, index+1, r)
 
 
 def _partition(arr: List[int], l: int, r: int) -> int:
     """Partitions `arr[l:r+1]` by value of middle element, returns index of partition"""
-    i = l
+    pivot = arr[l]
+    i = l-1
     j = r+1
     while True:
-        while True:
+        i += 1
+        while arr[i] < pivot:
             i += 1
-            if i == r or arr[i] >= arr[l]:
-                break
-        while True:
+        j -= 1
+        while arr[j] > pivot:
             j -= 1
-            if j == l or arr[l] >= arr[j]:
-                break
         if i >= j:
-            break
+            return j
         arr[i], arr[j] = arr[j], arr[i]
-
-    arr[l], arr[j] = arr[j], arr[l]
-    return j
 
 
 def make_tests() -> List[List[int]]:
