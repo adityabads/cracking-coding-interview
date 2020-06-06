@@ -39,36 +39,35 @@ def selection_sort(arr: List[int]) -> None:
 
 
 def merge_sort(arr: List[int], l: int = 0, r: int = None) -> None:
-    """Merge sort `arr[l:r]`"""
+    """Merge sort `arr[l...r]`"""
     if r is None:
-        r = len(arr)
-    if r-l > 1:
+        r = len(arr) - 1
+    if l < r:
         mid = (l+r)//2
         merge_sort(arr, l, mid)
-        merge_sort(arr, mid, r)
+        merge_sort(arr, mid+1, r)
         _merge(arr, l, mid, r)
 
 
 def _merge(arr: List[int], l: int, mid: int, r: int) -> None:
-    """Merges sorted sublists arr[l:mid] and arr[mid:r] in place"""
-    assert l >= 0 and l < mid and mid < r and r <= len(arr)
+    """Merges sorted sublists arr[l...mid] and arr[mid+1...r] in place"""
     merged = []
     lefti = l
-    righti = mid
-    while lefti < mid or righti < r:
-        leftval = arr[lefti] if lefti < mid else float("inf")
-        rightval = arr[righti] if righti < r else float("inf")
+    righti = mid+1
+    while lefti <= mid or righti <= r:
+        leftval = arr[lefti] if lefti <= mid else float("inf")
+        rightval = arr[righti] if righti <= r else float("inf")
         if leftval <= rightval:
             merged.append(leftval)
             lefti += 1
         else:
             merged.append(rightval)
             righti += 1
-    arr[l:r] = merged
+    arr[l:r+1] = merged
 
 
 def quick_sort(arr: List[int], l: int = 0, r: int = None) -> None:
-    """Quick sort arr[l:r+1]"""
+    """Quick sort arr[l...r]"""
     if r is None:
         r = len(arr) - 1
     if l < r:
@@ -78,7 +77,7 @@ def quick_sort(arr: List[int], l: int = 0, r: int = None) -> None:
 
 
 def _partition(arr: List[int], l: int, r: int) -> int:
-    """Partitions `arr[l:r+1]` by value of middle element, returns index of partition"""
+    """Partitions `arr[l...r]` by value of middle element, returns index of partition"""
     pivot = arr[l]
     i = l-1
     j = r+1
