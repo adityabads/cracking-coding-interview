@@ -10,10 +10,10 @@ from typing import List
 import unittest
 
 # where mid = (i+j)//2,
-# f(arr, i, j) =    None,               i >= j
+# f(arr, i, j) :=   None,               i > j
 #                   mid,                arr[mid] == mid
 #                   f(arr, mid+1, j),   arr[mid] < mid
-#                   f(arr, i, mid),     otherwise
+#                   f(arr, i, mid-1),   otherwise
 
 
 def magic_index_recursive(arr: List[int], i: int = 0, j: int = None) -> int:
