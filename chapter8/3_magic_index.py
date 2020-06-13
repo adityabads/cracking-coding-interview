@@ -16,18 +16,32 @@ import unittest
 #                   f(arr, i, mid),     otherwise
 
 
-def magic_index(arr: List[int], i: int = 0, j: int = None) -> int:
+def magic_index_recursive(arr: List[int], i: int = 0, j: int = None) -> int:
     if j is None:
-        j = len(arr)
-    if i >= j:
+        j = len(arr)-1
+    if i > j:
         return None
     mid = (i + j) // 2
     if arr[mid] == mid:
         return mid
     elif arr[mid] < mid:
-        return magic_index(arr, mid+1, j)
+        return magic_index_recursive(arr, mid+1, j)
     else:
-        return magic_index(arr, i, mid)
+        return magic_index_recursive(arr, i, mid-1)
+
+
+def magic_index(arr: List[int], i: int = 0, j: int = None) -> int:
+    if j is None:
+        j = len(arr)-1
+    while i <= j:
+        mid = (i + j) // 2
+        if arr[mid] == mid:
+            return mid
+        elif arr[mid] < mid:
+            i = mid+1
+        else:
+            j = mid-1
+    return None
 
 
 class TestMagicIndex(unittest.TestCase):
@@ -46,9 +60,11 @@ class TestMagicIndex(unittest.TestCase):
         ]
         for arr, indices in trues:
             with self.subTest(arr=arr):
+                self.assertIn(magic_index_recursive(arr), indices)
                 self.assertIn(magic_index(arr), indices)
         for arr in falses:
             with self.subTest(arr=arr):
+                self.assertIsNone(magic_index_recursive(arr))
                 self.assertIsNone(magic_index(arr))
 
 

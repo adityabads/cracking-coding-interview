@@ -1,7 +1,6 @@
 # Power Set
 # Write a method to return all subsets of a set
 
-
 from typing import Dict, List, Set, Tuple
 import unittest
 

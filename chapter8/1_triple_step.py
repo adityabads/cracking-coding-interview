@@ -11,14 +11,14 @@ import unittest
 #           f(n - 1) + f(n - 2) + f(n - 3), otherwise
 
 
-def triple_step(n: int) -> int:
+def triple_step_recursive(n: int) -> int:
     if n == 1:
         return 1
     elif n == 2:
         return 2
     elif n == 3:
         return 4
-    return triple_step(n - 1) + triple_step(n - 2) + triple_step(n - 3)
+    return triple_step_recursive(n - 1) + triple_step_recursive(n - 2) + triple_step_recursive(n - 3)
 
 
 def triple_step_memo(n: int, memo=None) -> int:
@@ -60,7 +60,7 @@ class TestTripleStep(unittest.TestCase):
         ]
         for n, ways in tests:
             with self.subTest(n=n):
-                self.assertEqual(triple_step(n), ways)
+                self.assertEqual(triple_step_recursive(n), ways)
                 self.assertEqual(triple_step_memo(n), ways)
                 self.assertEqual(triple_step_dp(n), ways)
 

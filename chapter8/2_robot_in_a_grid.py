@@ -14,7 +14,8 @@ import unittest
 #               f(i, j-1) + [(i, j)],   f(i, j-1) != null
 
 
-def find_path(grid: List[List[bool]], i: int = None, j: int = None) -> List[Tuple[int, int]]:
+def find_path_recursive(grid: List[List[bool]],
+                        i: int = None, j: int = None) -> List[Tuple[int, int]]:
     if i is None:
         i = len(grid) - 1
     if j is None:
@@ -26,12 +27,12 @@ def find_path(grid: List[List[bool]], i: int = None, j: int = None) -> List[Tupl
     if i == 0 and j == 0:
         return [(i, j)]
 
-    uppath = find_path(grid, i-1, j)
+    uppath = find_path_recursive(grid, i-1, j)
     if uppath:
         uppath.append((i, j))
         return uppath
 
-    downpath = find_path(grid, i, j-1)
+    downpath = find_path_recursive(grid, i, j-1)
     if downpath:
         downpath.append((i, j))
         return downpath
@@ -56,7 +57,7 @@ def find_path_memo(grid: List[List[bool]], i: int = None, j: int = None,
         memo = {}
 
     if (i-1, j) not in memo:
-        memo[(i-1, j)] = find_path(grid, i-1, j)
+        memo[(i-1, j)] = find_path_memo(grid, i-1, j, memo)
 
     uppath = memo[(i-1, j)]
     if uppath:
@@ -64,7 +65,7 @@ def find_path_memo(grid: List[List[bool]], i: int = None, j: int = None,
         return uppath
 
     if (i, j-1) not in memo:
-        memo[(i, j-1)] = find_path(grid, i, j-1)
+        memo[(i, j-1)] = find_path_memo(grid, i, j-1, memo)
 
     leftpath = memo[(i, j-1)]
     if leftpath:
