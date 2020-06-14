@@ -10,9 +10,6 @@ from mybinarytree import TreeNode, make_binary_tree
 from typing import Dict, List
 import unittest
 
-# #6, #14, #52, #68, #77, #87, #94, #103, #108, #115
-
-
 def subarrays_with_sum_k(arr: List[int], k: int) -> int:
     """Returns number of consecutive subarrays summing to k"""
     sums = defaultdict(int)
